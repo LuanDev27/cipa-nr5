@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inspeção Incêndio e Sinalização</title>
+<meta name="description" content="Inspeção de combate a incêndio e sinalização no 2º piso e na biblioteca do Ana Neri Educação Profissional, com mapas mentais, fotos, normas e plano de ação.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE relatório técnico escolar de SST, claro e direto
+   IDEA placa de sinalização de emergência: vermelho de equipamento, verde de saída, amarelo de alerta
+   PICTURE mapas mentais ligados, com itens coloridos por gravidade e foto em cada ponto
+   COLOUR branco, tinta preta, vermelho #c8211b, verde #00843d, amarelo #f5b800
+   TYPE Archivo 800 + Archivo
+   LAYOUT capa vermelha com título, equipe e placar; navegação fixa; mapas em largura total; galeria, plano de ação, normas e método em faixas */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#121212);--ink:light-dark(#141414,#f1f1f1);--muted:light-dark(#555,#aaa);--line:light-dark(#c9c9c9,#424242);--panel:light-dark(#f3f3f1,#1c1c1c);--red:#c8211b;--green:#00843d;--yellow:#f5b800}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 Archivo,system-ui,sans-serif;overflow-x:clip}
+img{max-width:100%}
+.band{padding-block:clamp(28px,4vw,56px);padding-left:max(5vw,16px);padding-right:max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+button,select,input{font:inherit;color:inherit}
+button{cursor:pointer}
+button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+h2{font-size:clamp(28px,3.6vw,40px);font-weight:800;line-height:1.05;letter-spacing:-.02em;margin:0 0 8px;text-wrap:balance}
+.lead{color:var(--muted);margin:0 0 22px;max-width:70ch}
+.hero{background:var(--red);color:#fff}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:end}
+.hero h1{font-weight:800;font-size:clamp(36px,5.4vw,60px);line-height:1.02;letter-spacing:-.025em;margin:0 0 14px;text-wrap:balance}
+.hero .sub{margin:0 0 18px;max-width:60ch;font-size:17px}
+.team{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+.team li{background:#fff;color:#141414;border-radius:6px;padding:5px 12px;font-weight:600}
+.score{background:#fff;color:#141414;border-radius:12px;padding:20px}
+.score h3{margin:0 0 14px;font-size:18px;font-weight:800}
+.tot{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:16px}
+.tot div{border-radius:8px;padding:10px 12px;font-weight:600;font-size:14px}
+.tot b{display:block;font-size:clamp(28px,3.4vw,40px);font-weight:800;line-height:1}
+.bars{display:flex;flex-direction:column;gap:10px}
+.bar{display:grid;grid-template-columns:7.5em minmax(0,1fr) 2.2em;gap:10px;align-items:center;font-size:14px;font-weight:600}
+.track{display:flex;height:18px;border-radius:4px;overflow:hidden;background:#eee}
+.track i{display:block;height:100%}
+.bar span:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.k-c{background:var(--red);color:#fff}
+.k-a{background:var(--yellow);color:#141414}
+.k-o{background:var(--green);color:#fff}
+.nav{position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;gap:4px;overflow-x:auto;padding:8px max(5vw,16px);max-width:none}
+.nav a{flex:none;color:var(--ink);text-decoration:none;font-weight:600;padding:10px 14px;border-radius:8px;min-height:44px;display:flex;align-items:center}
+.nav a:hover,.nav a.on{background:var(--panel)}
+.nav a.on{box-shadow:inset 0 -3px 0 var(--red)}
+.concl{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:14px}
+.concl article{border:1px solid var(--line);border-top:6px solid var(--red);border-radius:10px;padding:16px 18px;background:var(--panel)}
+.concl article.y{border-top-color:var(--yellow)}
+.concl h3{margin:0 0 6px;font-size:18px;font-weight:800;line-height:1.2}
+.concl p{margin:0;font-size:15px}
+.bar2{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:14px}
+.grp{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.tab{min-height:44px;padding:8px 18px;border:2px solid var(--ink);background:transparent;border-radius:8px;font-weight:600}
+.tab[aria-selected=true]{background:var(--ink);color:var(--bg)}
+.chip{min-height:40px;padding:6px 14px;border:1px solid var(--line);background:var(--panel);border-radius:999px;font-weight:600;font-size:15px;display:inline-flex;align-items:center;gap:8px}
+.chip i{width:10px;height:10px;border-radius:2px;background:var(--sev,var(--ink))}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tool{min-height:40px;padding:6px 14px;border:1px solid var(--line);background:var(--panel);border-radius:8px}
+select,input[type=search]{min-height:44px;padding:8px 12px;border:1px solid var(--line);background:var(--bg);border-radius:8px;font-size:16px}
+.hint{color:var(--muted);font-size:14px;margin:0 0 10px}
+.mapwrap{position:relative;overflow-x:auto;padding:8px 4px 16px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+#links{position:absolute;left:0;top:0;pointer-events:none;overflow:visible}
+#links path{fill:none;stroke:var(--line);stroke-width:2}
+.tree{position:relative;display:flex;align-items:center;gap:64px;padding:12px}
+.root{flex:none;width:210px;background:var(--ink);color:var(--bg);border-radius:10px;padding:18px}
+.root strong{display:block;font-size:24px;font-weight:800;line-height:1.1}
+.root span{display:block;font-size:14px;margin-top:6px;opacity:.85}
+.branches{display:flex;flex-direction:column;gap:18px}
+.br{display:flex;align-items:center;gap:56px}
+.branch{flex:none;width:232px;text-align:left;background:var(--panel);border:2px solid var(--ink);border-radius:10px;padding:12px 14px;transition:opacity .15s}
+.branch .bt{display:flex;justify-content:space-between;gap:8px;font-weight:800;font-size:17px;line-height:1.2}
+.branch .bt em{font-style:normal;font-weight:600;color:var(--muted)}
+.branch .nr{display:block;font-size:13px;color:var(--muted);margin-top:4px}
+.branch .mini{display:flex;gap:4px;margin-top:8px}
+.branch .mini u{width:12px;height:12px;border-radius:3px}
+.leaves{display:flex;flex-direction:column;gap:8px}
+.br.closed .leaves{display:none}
+.leaf{width:300px;display:flex;align-items:center;gap:10px;text-align:left;min-height:44px;padding:8px 12px;background:var(--bg);border:1px solid var(--line);border-left:6px solid var(--sev);border-radius:8px;font-size:15px;line-height:1.3;transition:opacity .15s}
+.leaf:hover{background:var(--panel)}
+.leaf .t{flex:1}
+.leaf svg{flex:none;width:18px;height:18px;color:var(--muted)}
+.dim{opacity:.22}
+.s-c{--sev:var(--red)}
+.s-a{--sev:var(--yellow)}
+.s-o{--sev:var(--green)}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:16px}
+.ph{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+.ph>button{display:block;padding:0;border:0;background:#000;position:relative}
+.ph img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover}
+.ph .loc{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.7);color:#fff;font-size:13px;font-weight:600;padding:2px 8px;border-radius:4px}
+.ph figcaption{padding:10px 12px 12px}
+.ph h3{font-size:16px;font-weight:800;line-height:1.2;margin:0 0 8px}
+.ph ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.ph li button,.it{display:flex;gap:8px;align-items:flex-start;text-align:left;width:100%;min-height:32px;padding:4px 0;border:0;background:none;font-size:14px;line-height:1.3}
+.ph li i,.it i{flex:none;width:10px;height:10px;border-radius:2px;margin-top:4px;background:var(--sev)}
+.planbar{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(2,minmax(0,.8fr));gap:10px;margin-bottom:12px}
+.planbar label{display:flex;flex-direction:column;gap:4px;font-size:14px;font-weight:600}
+.active{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px;min-height:24px;font-size:14px;color:var(--muted)}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{text-align:left;font-size:13px;color:var(--muted);font-weight:600;border-bottom:2px solid var(--ink);padding:8px 10px}
+td{border-bottom:1px solid var(--line);padding:10px;vertical-align:top}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:var(--panel)}
+.sv{display:inline-block;padding:2px 8px;border-radius:4px;font-weight:600;font-size:13px;white-space:nowrap}
+td.item b{display:block}
+td.nr{color:var(--muted);font-size:14px}
+.empty{padding:24px;text-align:center;color:var(--muted)}
+.norms{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,270px),1fr));gap:10px}
+.norm{display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left;border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:12px 14px;min-height:64px}
+.norm b{display:block;font-size:17px;font-weight:800}
+.norm span{font-size:14px;color:var(--muted)}
+.norm em{font-style:normal;font-weight:800;font-size:20px;background:var(--ink);color:var(--bg);border-radius:6px;min-width:2em;text-align:center;padding:2px 6px}
+.met{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px}
+.met p{margin:0 0 12px;max-width:65ch}
+.met ul{margin:0;padding-left:20px}
+footer{background:var(--ink);color:var(--bg);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:flex;align-items:center;justify-content:center;padding:16px;z-index:30}
+.modal[hidden]{display:none}
+.sheet{background:var(--bg);color:var(--ink);border-radius:12px;width:min(760px,100%);max-height:calc(100% - 16px);overflow:auto;border-top:10px solid var(--sev)}
+.sheet img{display:block;width:100%;max-height:48vh;object-fit:contain;background:#000}
+.sheet .in{padding:18px 20px 20px}
+.sheet .sv{font-size:14px;background:var(--sev);color:#fff}
+.sheet.s-a .sv{color:#141414}
+.sheet h3{font-size:24px;font-weight:800;line-height:1.15;margin:10px 0 4px}
+.sheet .wh{color:var(--muted);font-size:14px;margin:0 0 6px}
+.sheet dl{margin:0}
+.sheet dt{font-weight:800;margin-top:12px}
+.sheet dd{margin:2px 0 0}
+.mnav{display:flex;gap:8px;justify-content:space-between;align-items:center;margin-top:18px;flex-wrap:wrap}
+.mnav span{color:var(--muted);font-size:14px}
+@media(max-width:900px){
+.hero .wrap{grid-template-columns:minmax(0,1fr)}
+.tree{flex-direction:column;align-items:stretch;gap:20px}
+.root{width:auto;max-width:440px}
+.branches{padding-left:22px;gap:16px}
+.br{flex-direction:column;align-items:stretch;gap:8px}
+.branch{width:auto;max-width:440px}
+.leaves{padding-left:28px}
+.leaf{width:auto;max-width:500px}
+.met{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:700px){
+.planbar{grid-template-columns:minmax(0,1fr)}
+table{font-size:14px}
+.stack thead{display:none}
+.stack tr{display:grid;padding-block:10px;border-bottom:1px solid var(--line)}
+.stack td{display:flex;gap:12px;border:0;padding:3px 0}
+.stack td::before{content:attr(data-l);flex:none;width:6.5em;color:var(--muted);font-size:13px}
+}
+@media(prefers-reduced-motion:no-preference){.sheet{animation:up .18s ease-out}@keyframes up{from{transform:translateY(12px);opacity:0}}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="hero band"><div class="wrap">
+<div>
+<h1>Combate a incêndio e sinalização</h1>
+<p class="sub">Inspeção de segurança do trabalho no 2º piso e na biblioteca do Ana Neri Educação Profissional, em 23 de novembro de 2026. Curso Técnico em Segurança do Trabalho, turma TSEG1M26CO.</p>
+<ul class="team" aria-label="Equipe"><li>Luan Christhian</li><li>Ckalenna</li><li>Ana Paula</li><li>Aurilene</li></ul>
+</div>
+<div class="score" aria-label="Resumo da inspeção">
+<h3 id="sc-t">Resultado da inspeção</h3>
+<div class="tot" id="tot"></div>
+<div class="bars" id="bars"></div>
+</div>
+</div></header>
+<nav class="nav" aria-label="Seções"><div class="wrap">
+<a href="#resumo">Resumo</a><a href="#mapas">Mapas mentais</a><a href="#fotos">Fotos</a><a href="#plano">Plano de ação</a><a href="#normas">Normas</a><a href="#metodo">Método</a>
+</div></nav>
+<main>
+<section class="band" id="resumo"><div class="wrap">
+<h2>O que a inspeção encontrou</h2>
+<p class="lead">Os dois ambientes têm sinalização básica, mas faltam os equipamentos mais simples de combate e há improvisos elétricos perto de material combustível.</p>
+<div class="concl">
+<article><h3>Nenhum extintor à vista</h3><p>Nem nos corredores do 2º piso nem na biblioteca, que concentra papel, plástico e computadores.</p></article>
+<article><h3>Uma única rota de fuga</h3><p>A mesma escada atende os pisos 1, 2 e 3, e sobre ela estão o portão de grade trancável e o quadro de força.</p></article>
+<article><h3>Elétrica improvisada</h3><p>Emendas em fita, cabos sem eletroduto, benjamim no chão e estabilizador sem ventilação, ao lado de papel.</p></article>
+<article><h3>Biblioteca sem saída alternativa</h3><p>Sala fechada, com alta carga de incêndio, sem iluminação de emergência e com uma só porta, que tem fechadura.</p></article>
+<article class="y"><h3>Cheiro de mofo na biblioteca</h3><p>Relatado pela equipe numa sala fechada, com ar-condicionado mal conservado e muito papel.</p></article>
+<article class="y"><h3>Piso desgastado</h3><p>Cerâmica antiga, trincada e manchada em todo o andar, inclusive no patamar da escada.</p></article>
+</div>
+</div></section>
+<section class="band" id="mapas" style="background:var(--panel)"><div class="wrap">
+<h2>Mapas mentais</h2>
+<p class="lead">Cada ramo agrupa um tema e as normas que se aplicam. Toque num ramo para abrir ou fechar e num item para ver a foto, a norma e a sugestão de mudança.</p>
+<div class="bar2">
+<div class="grp" role="tablist"><button class="tab" role="tab" data-k="piso" id="t-piso">2º piso</button><button class="tab" role="tab" data-k="bib" id="t-bib">Biblioteca</button></div>
+<div class="grp"><button class="tool" id="open-all">Expandir tudo</button><button class="tool" id="close-all">Recolher tudo</button></div>
+</div>
+<div class="bar2"><div class="grp" id="mf" aria-label="Filtrar por gravidade"></div><select id="mnr" aria-label="Destacar por norma"></select></div>
+<div class="mapwrap" id="map"><svg id="links" aria-hidden="true"></svg><div class="tree" id="tree"></div></div>
+</div></section>
+<section class="band" id="fotos"><div class="wrap">
+<h2>Fotos analisadas</h2>
+<p class="lead">As 14 fotos tiradas pela equipe, com o que foi encontrado em cada uma.</p>
+<div class="bar2"><div class="grp" id="gf"></div></div>
+<div class="gal" id="gal"></div>
+</div></section>
+<section class="band" id="plano" style="background:var(--panel)"><div class="wrap">
+<h2>Plano de ação</h2>
+<p class="lead">Todos os pontos em ordem de prioridade. Críticos pedem correção imediata; os de atenção, correção planejada; os conformes, manutenção da condição atual.</p>
+<div class="planbar">
+<label for="q">Buscar<input type="search" id="q" placeholder="Ex.: extintor, portão, cabos"></label>
+<label for="fl">Local<select id="fl"><option value="all">Todos os locais</option><option value="piso">2º piso</option><option value="bib">Biblioteca</option></select></label>
+<label for="fs">Gravidade<select id="fs"><option value="all">Todas</option><option value="c">Crítico</option><option value="a">Atenção</option><option value="o">Conforme</option></select></label>
+</div>
+<div class="active" id="act"></div>
+<div class="scroll"><table class="stack"><thead><tr><th>Gravidade</th><th>Local</th><th>Ponto</th><th>Norma</th><th>Prioridade</th></tr></thead><tbody id="tb"></tbody></table></div>
+</div></section>
+<section class="band" id="normas"><div class="wrap">
+<h2>Normas implicadas</h2>
+<p class="lead">O número mostra quantos pontos citam cada norma. Toque para ver esses pontos no plano de ação.</p>
+<div class="norms" id="nm"></div>
+</div></section>
+<section class="band" id="metodo" style="background:var(--panel)"><div class="wrap met">
+<div><h2>Método</h2>
+<p>A equipe percorreu o 2º piso e a biblioteca e fotografou extintores, hidrante, sinalização, iluminação de emergência, instalações elétricas, rotas de fuga e armazenamento. Cada ponto foi comparado com as NRs e as normas técnicas aplicáveis e classificado em três níveis.</p>
+<p>A análise é visual. Itens marcados para verificar precisam de confirmação em campo. A quantidade de extintores, a exigência de alarme e detecção e o número de saídas dependem do projeto de prevenção aprovado pelo Corpo de Bombeiros do Maranhão.</p></div>
+<div><h2>Classificação</h2>
+<ul>
+<li><b>Crítico:</b> pode impedir a fuga ou o combate inicial ao fogo, ou é fonte provável de ignição. Correção imediata.</li>
+<li><b>Atenção:</b> desvio da norma ou da boa prática que aumenta o risco. Correção planejada.</li>
+<li><b>Conforme:</b> atende ao que se espera. Manter e incluir na rotina de inspeção.</li>
+</ul></div>
+</div></section>
+</main>
+<footer class="band"><div class="wrap"><span>Luan Christhian, Ckalenna, Ana Paula e Aurilene</span><span>Técnico em Segurança do Trabalho, Ana Neri Educação Profissional, 2026</span></div></footer>
+<div class="modal" id="modal" hidden><div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="m-t">
+<img id="m-img" alt="">
+<div class="in">
+<span class="sv" id="m-sv"></span>
+<h3 id="m-t"></h3>
+<p class="wh" id="m-b"></p>
+<dl><dt>Ponto observado</dt><dd id="m-p"></dd><dt>Norma implicada</dt><dd id="m-n"></dd><dt>Sugestão de mudança</dt><dd id="m-g"></dd><dt>Prioridade</dt><dd id="m-pr"></dd></dl>
+<div class="mnav"><button class="tool" id="m-prev">Anterior</button><span id="m-pos"></span><button class="tool" id="m-next">Próximo</button><button class="tool" id="m-x">Fechar</button></div>
+</div></div></div>
+<script>
+{
+const PH = {"a": "https://raw.githubusercontent.com/LuanDev27/cipa-nr5/inspecao-incendio/inspecao-incendio/a.jpg", "b": "https://raw.githubusercontent.com/LuanDev27/cipa-nr5/inspecao-incendio/inspecao-incendio/b.jpg", "c": "https://raw.githubusercontent.com/LuanDev27/cipa-nr5/inspecao-incendio/inspecao-incendio/c.jpg", "d": "https://raw.githubusercontent.com/LuanDev27/cipa-nr5/inspecao-incendio/inspecao-incendio/d.jpg", "e": "https://raw.githubusercontent.com/LuanDev27/cipa-nr5/inspecao-incendio/inspecao-incendio/e.jpg", "f": "https://raw.githubusercontent.com/LuanDev27/cipa-nr5/inspecao-incendio/inspecao-incendio/f.jpg", "g": "https://raw.githubusercontent.com/LuanDev27/cipa-nr5/inspecao-incendio/inspecao-incendio/g.jpg", "h": "https://raw.githubusercontent.com/LuanDev27/cipa-nr5/inspecao-incendio/inspecao-incendio/h.jpg", "i": "https://raw.githubusercontent.com/LuanDev27/cipa-nr5/inspecao-incendio/inspecao-incendio/i.jpg", "j": "https://raw.githubusercontent.com/LuanDev27/cipa-nr5/inspecao-incendio/inspecao-incendio/j.jpg", "k": "https://raw.githubusercontent.com/LuanDev27/cipa-nr5/inspecao-incendio/inspecao-incendio/k.jpg", "l": "https://raw.githubusercontent.com/LuanDev27/cipa-nr5/inspecao-incendio/inspecao-incendio/l.jpg", "m": "https://raw.githubusercontent.com/LuanDev27/cipa-nr5/inspecao-incendio/inspecao-incendio/m.jpg", "n": "https://raw.githubusercontent.com/LuanDev27/cipa-nr5/inspecao-incendio/inspecao-incendio/n.jpg"};
+const CAP = {a:"Shaft das condensadoras, visto de dentro",b:"Corredor de acesso ao shaft",c:"Corredor do hidrante",d:"Patamar da escada e quadro de força",e:"Hidrante e luminária de emergência",f:"Portão de grade e escada",g:"Estantes e área de leitura",h:"Ar-condicionado e armários",i:"Mesa de estudo, janela e cabines",j:"Estabilizador embaixo da mesa",k:"Banheiro desativado usado como depósito",l:"Cabine de computador",m:"Ar-condicionado split, detalhe",n:"Porta da biblioteca"};
+const SEV = {c:"Crítico",a:"Atenção",o:"Conforme"};
+const MAPS = {
+piso:{fotos:"abcdef",root:"2º piso",sub:"Corredores, shaft das condensadoras, hidrante e escada",br:[
+{t:"Combate a incêndio",nr:"NR-23, NBR 12693, NBR 13714",l:[
+{s:"c",t:"Nenhum extintor nos corredores",ph:"c",p:"Nas fotos dos corredores não aparece nenhum extintor: nem junto ao hidrante, nem ao quadro de força, nem no acesso ao shaft das condensadoras.",n:"NR-23 (medidas de prevenção conforme a legislação estadual e as normas técnicas); NBR 12693; normas técnicas do CBMMA.",g:"Confirmar no projeto aprovado pelo Corpo de Bombeiros a quantidade exigida e instalar extintores de pó ABC e de CO₂ junto ao hidrante e ao quadro, com placa e demarcação no piso."},
+{s:"o",t:"Hidrante sinalizado e sem tranca",ph:"e",p:"Abrigo de mangueira com placa acima, demarcação no piso e porta sem tranca. A alimentação vem da rede vermelha que passa pelo shaft.",n:"NBR 13714; NBR 16820.",g:"Manter. Registrar a inspeção periódica das mangueiras."},
+{s:"a",t:"Abrigo não inspecionado por dentro",ph:"c",p:"O abrigo não foi aberto na inspeção, então não foi possível conferir mangueira, esguicho, chave de mangueira nem etiqueta de inspeção.",n:"NBR 13714; NBR 12779 (inspeção e manutenção de mangueiras).",g:"Abrir o abrigo, conferir os componentes e a data da última inspeção da mangueira."},
+{s:"a",t:"Placa do hidrante desbotada",ph:"e",p:"Fundo vermelho desbotado. Placa fotoluminescente perde brilho com o tempo.",n:"NBR 16820.",g:"Testar a placa no escuro, trocar se necessário e confirmar o símbolo padrão na norma técnica do CBMMA."}]},
+{t:"Rota de fuga",nr:"NR-23, NBR 9077",l:[
+{s:"c",t:"Portão de grade com ferrolho e cadeado",ph:"f",p:"O portão fica entre o corredor do 2º andar e a escada. Trancado, deixa o andar sem saída.",n:"NR-23 (saídas não podem ficar trancadas durante o funcionamento e devem abrir com facilidade por dentro); NBR 9077.",g:"Manter aberto e fixo durante o expediente. Se for preciso trancar fora do horário, trocar ferrolho e cadeado por fechadura com barra antipânico."},
+{s:"a",t:"Piso desgastado no patamar da escada",ph:"d",p:"Cerâmica antiga, manchada e gasta no início da descida, na única rota de fuga do 2º e do 3º andar. Peças sem esmalte ficam mais escorregadias quando molhadas, por exemplo na limpeza.",n:"NR-8 (pisos sem condições que prejudiquem a circulação); NBR 9077.",g:"Priorizar o patamar na troca do piso, com cerâmica antiderrapante, e sinalizar piso molhado durante a limpeza."},
+{s:"a",t:"Rota de fuga única",ph:"f",p:"Há uma só escada, que liga o 1º, o 2º e o 3º piso e desce até a rua. Toda a evacuação do 2º e do 3º andar depende dela, e o portão trancável, o quadro de força e o piso desgastado estão justamente nessa rota. As placas de saída indicam o caminho, mas não criam uma segunda opção.",n:"NBR 9077; norma técnica de saídas de emergência do CBMMA (o número de saídas exigido depende da altura, da área e da lotação).",g:"Conferir no projeto aprovado se uma escada atende a lotação e tratar como prioridade tudo o que está sobre ela: portão destrancado, piso em bom estado, quadro protegido e escada sempre livre."},
+{s:"o",t:"Corrimão e faixas antiderrapantes",ph:"d",p:"Corrimão dos dois lados e faixas antiderrapantes nos degraus.",n:"NBR 9077.",g:"Manter. Prender a faixa branca descolada acima do corrimão e verificar a fixação do painel suspenso sobre a escada."}]},
+{t:"Sinalização",nr:"NR-26, NBR 16820, NBR 6493",l:[
+{s:"o",t:"Placa de saída na escada",ph:"d",p:"Placa verde de saída com seta de descida, bem posicionada no patamar.",n:"NBR 16820.",g:"Manter e incluir na rotina de inspeção."},
+{s:"a",t:"Orientação de rota incompleta",ph:"b",p:"Há seta de saída no corredor da biblioteca, mas o corredor do shaft e o cruzamento do hidrante não têm nenhuma; ali a única placa é a de Wi-Fi.",n:"NR-23 (vias de passagem sinalizadas com a direção da saída); NBR 16820.",g:"Instalar placas fotoluminescentes de orientação em cada mudança de direção até a escada."},
+{s:"a",t:"Quadro e shaft sem alerta padronizado",ph:"d",p:"O quadro tem a placa “Quadro de força”, mas não o triângulo amarelo de risco elétrico. O shaft não tem aviso de risco nem de acesso restrito.",n:"NR-26; NR-10; NBR 16820.",g:"Colocar placa de alerta de risco de choque elétrico no quadro e placa de acesso restrito no shaft."},
+{s:"a",t:"Tubulação de incêndio sem identificação",ph:"a",p:"Tubo vermelho no shaft, provavelmente a rede de hidrantes, sem identificação de fluido nem sentido de fluxo.",n:"NR-26; NBR 6493.",g:"Identificar a tubulação com etiqueta ou faixa e seta de fluxo."}]},
+{t:"Iluminação de emergência",nr:"NBR 10898",l:[
+{s:"o",t:"Bloco autônomo funcionando",ph:"e",p:"Luminária de emergência no cruzamento do hidrante, com o LED de carga aceso.",n:"NBR 10898.",g:"Manter e testar todo mês, registrando o teste."},
+{s:"a",t:"Luminária ligada em tomada comum",ph:"e",p:"A luminária está ligada numa tomada e montada na vertical. Se só o circuito da iluminação cair, ela não acende.",n:"NBR 10898.",g:"Ligar no mesmo circuito da iluminação do ambiente e instalar na posição indicada pelo fabricante."},
+{s:"a",t:"Corredor do shaft sem iluminação",ph:"b",p:"Não aparece luminária de emergência no corredor sem saída junto ao shaft.",n:"NBR 10898; NR-23.",g:"Avaliar a cobertura e instalar bloco autônomo se o corredor for área de circulação."}]},
+{t:"Instalações elétricas",nr:"NR-10, NBR 5410",l:[
+{s:"c",t:"Fiação exposta com emendas em fita",ph:"b",p:"Feixe de cabos sem eletroduto, com emendas em fita isolante, descendo pela quina do corredor e pelo shaft. É fonte de ignição em área de passagem.",n:"NR-10; NBR 5410 (condutores protegidos em eletroduto ou eletrocalha).",g:"Refazer as emendas com conectores adequados e passar os cabos em eletroduto ou eletrocalha, com profissional habilitado."},
+{s:"a",t:"Quadro de força na única escada",ph:"d",p:"O quadro fica no patamar da rota de fuga do 2º e do 3º andar. Um foco ali bloqueia a saída.",n:"NR-10; NR-23.",g:"Manter trancado e desobstruído, com extintor de CO₂ ao lado e inspeção periódica."},
+{s:"a",t:"Cabos de rede soltos",ph:"d",p:"Cabos de rede e de sensores passando soltos pela parede acima do quadro.",n:"NBR 5410.",g:"Organizar em canaleta ou eletroduto, separados dos circuitos de energia."}]},
+{t:"Edificação e piso",nr:"NR-8, NR-35",l:[
+{s:"c",t:"Abertura do shaft sem guarda-corpo",ph:"b",p:"Mureta na altura da cintura sobre um poço com piso em grelha vazada.",n:"NR-8 (aberturas protegidas contra quedas); NR-35 para a manutenção em altura.",g:"Medir a mureta e instalar guarda-corpo ou tela até a altura exigida. Acesso de manutenção só com procedimento de trabalho em altura."},
+{s:"a",t:"Piso velho em todo o andar",ph:"c",p:"Cerâmica antiga, manchada, com rejunte escuro e quebrado no corredor, no hidrante e na escada. O piso está seco: as manchas são desgaste.",n:"NR-8 (pisos sem saliências, depressões ou condições que prejudiquem a circulação).",g:"Planejar a troca do piso por cerâmica antiderrapante, começando pela rota até a escada."},
+{s:"a",t:"Piso trincado e quina viva",ph:"b",p:"Cerâmicas trincadas e uma cantoneira metálica perfurada solta na parede, na altura da perna.",n:"NR-8.",g:"Trocar as peças trincadas e retirar ou proteger a cantoneira."}]}
+]},
+bib:{fotos:"nghijklm",root:"Biblioteca",sub:"Alta carga de incêndio: papel, plástico e computadores",br:[
+{t:"Combate a incêndio",nr:"NR-23, NBR 12693",l:[
+{s:"c",t:"Nenhum extintor na biblioteca",ph:"g",p:"Sala com muito papel, móveis de plástico e computadores, sem nenhum extintor visível.",n:"NR-23; NBR 12693; normas técnicas do CBMMA.",g:"Instalar extintor de água pressurizada ou pó ABC para os livros e de CO₂ para os computadores, perto da porta e sinalizados."},
+{s:"a",t:"Sem detecção de fumaça",ph:"g",p:"Não aparece detector de fumaça nem acionador manual de alarme.",n:"Norma técnica de alarme e detecção do CBMMA (a exigência depende da área e da ocupação).",g:"Verificar no projeto se é exigido. Mesmo sem exigência, um detector ajuda numa sala com essa carga de incêndio."}]},
+{t:"Saída e sinalização",nr:"NR-26, NBR 16820, NBR 10898",l:[
+{s:"c",t:"Sem iluminação de emergência na sala",ph:"i",p:"Dentro da biblioteca não aparece luminária de emergência nem placa de saída sobre a porta. Sem energia, a sala fica escura com estantes e cabines no caminho.",n:"NR-23; NBR 10898; NBR 16820.",g:"Instalar bloco autônomo cobrindo o caminho até a porta e placa de saída sobre ela, pelo lado de dentro."},
+{s:"o",t:"Seta de saída no corredor",ph:"n",p:"Ao lado da porta, no corredor, há placa fotoluminescente de saída com seta indicando a direção da fuga.",n:"NBR 16820; NR-23.",g:"Manter e conferir se a sequência de setas continua até a escada."},
+{s:"c",t:"Única saída: porta com fechadura",ph:"n",p:"A biblioteca é uma sala fechada, sem saída de emergência: a única saída é esta porta de uma folha, com fechadura com chave, que parece abrir para dentro, contra o sentido da fuga. É a sala com mais carga de incêndio do andar. Se a porta estiver trancada ou bloqueada, ninguém sai.",n:"NR-23 (saídas não podem ser trancadas com pessoas dentro e devem abrir com facilidade por dentro); NBR 9077 (número de saídas, distância a percorrer e sentido de abertura conforme a lotação).",g:"Nunca trancar com gente dentro e usar fechadura que abra por dentro sem chave. Confirmar a lotação da sala e a distância até a porta; se a norma exigir, inverter a abertura para o sentido da fuga. Manter o caminho até a porta sempre livre."},
+{s:"a",t:"Cabines estreitam a passagem",ph:"i",p:"As divisórias das cabines de computador reduzem a área livre de circulação.",n:"NBR 9077; NR-23.",g:"Garantir corredor livre até a porta, sem cadeiras ou mochilas no caminho."}]},
+{t:"Instalações elétricas",nr:"NR-10, NBR 5410",l:[
+{s:"a",t:"Benjamim no chão",ph:"j",p:"Adaptador T no piso, com cabos atravessando o chão: risco de sobrecarga, de tropeço e de contato com água na limpeza.",n:"NR-10; NBR 5410.",g:"Retirar o benjamim, instalar tomadas suficientes acima do piso e organizar os cabos."},
+{s:"c",t:"Estabilizador sem ventilação",ph:"j",p:"Estabilizador fechado num nicho, com cabos enrolados por cima e papel e sacola plástica encostados.",n:"NR-10; NR-23.",g:"Deixar o equipamento ventilado, tirar o material combustível de perto e avaliar se o estabilizador ainda é necessário."},
+{s:"a",t:"Estabilizadores no piso das cabines",ph:"l",p:"Equipamentos direto no chão, onde o aluno põe os pés e onde a água da limpeza chega.",n:"NR-10; NBR 5410.",g:"Suspender em suporte ou fixar sob o tampo."},
+{s:"a",t:"Rolo de cabos solto no teto",ph:"h",p:"Sobra de cabos enrolada e pendurada no canto do teto, acima dos armários.",n:"NR-10; NBR 5410.",g:"Retirar a sobra ou acomodar em caixa de passagem, identificando o circuito."},
+{s:"a",t:"Lâmpadas tubulares sem proteção",ph:"m",p:"Tubos expostos, sem calha ou difusor, logo acima do ar-condicionado.",n:"NBR 5410.",g:"Instalar luminária com proteção. Se forem fluorescentes, trocar por LED."}]},
+{t:"Climatização e ar",nr:"Lei 13.589/2018, NR-9",l:[
+{s:"a",t:"Split remendado com fita",ph:"m",p:"Carcaça presa com fita, aleta faltando e a placa do display pendurada para fora (baixa tensão). Há etiqueta de manutenção.",n:"Lei 13.589/2018 (PMOC em ambientes climatizados de uso coletivo).",g:"Fazer manutenção corretiva, apresentar o PMOC e conferir a data da etiqueta."},
+{s:"a",t:"Cheiro de mofo na sala",ph:"h",p:"A equipe sentiu cheiro de mofo persistente na biblioteca. É uma sala fechada, sem janela para o exterior, com ar-condicionado mal conservado e muito papel, que retém umidade. Relato sensorial, sem medição.",n:"Lei 13.589/2018 (PMOC); RE 9/2003 (padrões de qualidade do ar interior da ANVISA); NR-9 (agentes biológicos).",g:"Limpar e higienizar o split e os filtros, procurar focos de mofo em paredes, estantes e livros, melhorar a renovação de ar e pedir análise da qualidade do ar se o cheiro continuar."},
+]},
+{t:"Armazenamento",nr:"NR-23, NR-26",l:[
+{s:"c",t:"Banheiro desativado virou depósito",ph:"k",p:"Papel, apostilas, caixas, mesas de plástico e frascos sem identificação num espaço pequeno, fechado e sem detecção.",n:"NR-23; NR-26 (rotulagem de produtos químicos e FDS).",g:"Organizar (5S), descartar o que não serve, identificar os frascos e retirar inflamáveis. Confirmar se a água e a energia do banheiro foram cortadas."},
+{s:"a",t:"Estantes altas sem fixação visível",ph:"g",p:"Estantes cheias, com livros empilhados no topo. Não dá para ver se estão presas à parede.",n:"NR-8.",g:"Fixar as estantes na parede e tirar o peso do topo."},
+{s:"o",t:"Estantes de aço",ph:"g",p:"Estrutura metálica não combustível, com o acervo organizado por assunto.",n:"Boa prática de prevenção.",g:"Manter."}]},
+{t:"Edificação e ergonomia",nr:"NR-8, NR-17",l:[
+{s:"a",t:"Piso velho e divisórias danificadas",ph:"i",p:"Piso cerâmico antigo e manchado, e divisórias das cabines com bordas descascadas e base danificada.",n:"NR-8.",g:"Recuperar ou trocar as divisórias e incluir a biblioteca no plano de troca do piso."},
+{s:"a",t:"Sala fechada, janela para o shaft",ph:"i",p:"A sala não tem abertura para o exterior: a janela parece dar para o shaft das condensadoras. A fumaça de um foco na sala se acumula, e a de um foco no shaft pode entrar por ali. A verificar.",n:"NR-23.",g:"Confirmar em campo. Se for o caso, manter a janela fechada e tratar a fiação do shaft como prioridade."},
+{s:"a",t:"Cadeiras de plástico nos computadores",ph:"l",p:"Cadeiras sem regulagem para uso prolongado em computador.",n:"NR-17 (quando usadas por trabalhadores).",g:"Cadeira ajustável para funcionários; para alunos, avaliar conforto."}]}
+]}};
+
+const PRI = {c:"Imediata",a:"Planejada",o:"Manter"};
+const LOC = {piso:"2º piso",bib:"Biblioteca"};
+const NORM = {"NR-8":"Edificações","NR-9":"Agentes físicos, químicos e biológicos","NR-10":"Segurança em eletricidade","NR-17":"Ergonomia","NR-23":"Proteção contra incêndios","NR-26":"Sinalização de segurança","NR-35":"Trabalho em altura","NBR 16820":"Sinalização de emergência","NBR 12693":"Extintores","NBR 13714":"Hidrantes e mangotinhos","NBR 12779":"Mangueiras de incêndio","NBR 10898":"Iluminação de emergência","NBR 9077":"Saídas de emergência","NBR 5410":"Instalações elétricas de baixa tensão","NBR 6493":"Cores de tubulações","Lei 13.589/2018":"PMOC, climatização","RE 9/2003":"Qualidade do ar interior, ANVISA","CBMMA":"Normas do Corpo de Bombeiros do MA"};
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+const nrsOf = s => [...new Set((s.match(/NR-\d+|NBR \d+|Lei 13\.589\/2018|RE 9\/2003|CBMMA/g) || []))];
+const ALL = [];
+for (const k of ["piso","bib"]) MAPS[k].br.forEach((b, bi) => b.l.forEach(x => ALL.push({...x, k, b:b.t, bi, nrs:nrsOf(x.n + " " + b.nr)})));
+ALL.forEach((x, i) => x.id = i);
+const ORD = {c:0,a:1,o:2};
+const cam = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';
+const svC = s => `<span class="sv k-${s}">${SEV[s]}</span>`;
+let cur = "piso", MF = {s:"all", nr:"all"}, PF = {q:"", k:"all", s:"all", nr:"all"}, GF = "all", seq = [], pos = 0;
+const cnt = arr => arr.reduce((a, x) => (a[x.s]++, a), {c:0,a:0,o:0});
+function hero() {
+  const t = cnt(ALL);
+  $("#tot").innerHTML = ["c","a","o"].map(s => `<div class="k-${s}"><b>${t[s]}</b>${s==="c"?"críticos":s==="a"?"atenção":"conformes"}</div>`).join("");
+  $("#bars").innerHTML = ["piso","bib"].map(k => { const it = ALL.filter(x => x.k === k), c = cnt(it);
+    return `<div class="bar"><span>${LOC[k]}</span><span class="track">${["c","a","o"].map(s => `<i class="k-${s}" style="width:${c[s] / it.length * 100}%" title="${c[s]} ${SEV[s]}"></i>`).join("")}</span><span>${it.length}</span></div>`; }).join("");
+}
+const mapItems = () => ALL.filter(x => x.k === cur);
+const hit = x => (MF.s === "all" || x.s === MF.s) && (MF.nr === "all" || x.nrs.includes(MF.nr));
+function renderMap() {
+  const m = MAPS[cur], items = mapItems();
+  $("#tree").innerHTML = `<div class="root" id="root"><strong>${esc(m.root)}</strong><span>${esc(m.sub)}</span></div><div class="branches">` +
+    m.br.map((b, bi) => { const ls = items.filter(x => x.bi === bi), any = ls.some(hit);
+      return `<div class="br"><button class="branch${any ? "" : " dim"}" id="b${bi}" data-p="root" aria-expanded="true"><span class="bt">${esc(b.t)}<em>${ls.length}</em></span><span class="nr">${esc(b.nr)}</span><span class="mini">${ls.map(x => `<u class="k-${x.s}"></u>`).join("")}</span></button><div class="leaves">` +
+        ls.map(x => `<button class="leaf s-${x.s}${hit(x) ? "" : " dim"}" data-id="${x.id}" data-p="b${bi}"><span class="t">${esc(x.t)}</span>${x.ph ? cam : ""}</button>`).join("") + `</div></div>`; }).join("") + `</div>`;
+  const c = cnt(items);
+  $("#mf").innerHTML = [["all","Todos",items.length],["c","Críticos",c.c],["a","Atenção",c.a],["o","Conformes",c.o]].map(([s, l, n]) => `<button class="chip ${s === "all" ? "" : "s-" + s}" data-mf="${s}" aria-pressed="${MF.s === s}">${s === "all" ? "" : "<i></i>"}${l} (${n})</button>`).join("");
+  const ns = [...new Set(items.flatMap(x => x.nrs))].sort((a, b) => a.localeCompare(b, "pt", {numeric:true}));
+  if (MF.nr !== "all" && !ns.includes(MF.nr)) MF.nr = "all";
+  $("#mnr").innerHTML = `<option value="all">Destacar por norma: todas</option>` + ns.map(n => `<option value="${n}"${MF.nr === n ? " selected" : ""}>${n}</option>`).join("");
+  document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", t.dataset.k === cur));
+  requestAnimationFrame(draw);
+}
+const mapEl = $("#map"), svg = $("#links");
+function draw() {
+  const R = mapEl.getBoundingClientRect(), W = mapEl.scrollWidth, H = mapEl.scrollHeight;
+  svg.setAttribute("width", W); svg.setAttribute("height", H); svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const vert = matchMedia("(max-width:900px)").matches;
+  const rel = el => { const r = el.getBoundingClientRect(); return {l:r.left - R.left + mapEl.scrollLeft, t:r.top - R.top + mapEl.scrollTop, w:r.width, h:r.height}; };
+  let d = "";
+  document.querySelectorAll("#tree [data-p]").forEach(el => {
+    if (!el.offsetParent) return; const par = document.getElementById(el.dataset.p); if (!par) return;
+    const p = rel(par), c = rel(el);
+    if (!vert) { const x1 = p.l + p.w, y1 = p.t + p.h / 2, x2 = c.l, y2 = c.t + c.h / 2, mx = (x1 + x2) / 2; d += `M${x1} ${y1}C${mx} ${y1} ${mx} ${y2} ${x2} ${y2}`; }
+    else { const x1 = p.l + 14, y1 = p.t + p.h, x2 = c.l, y2 = c.t + c.h / 2; d += `M${x1} ${y1}V${y2 - 8}Q${x1} ${y2} ${x1 + 8} ${y2}H${x2}`; }
+  });
+  svg.innerHTML = `<path d="${d}"/>`;
+}
+function renderGal() {
+  $("#gf").innerHTML = [["all","Todas"],["piso","2º piso"],["bib","Biblioteca"]].map(([k, l]) => `<button class="chip" data-gf="${k}" aria-pressed="${GF === k}">${l}</button>`).join("");
+  const ks = GF === "all" ? ["piso","bib"] : [GF];
+  $("#gal").innerHTML = ks.flatMap(k => [...MAPS[k].fotos].map(f => { const its = ALL.filter(x => x.k === k && x.ph === f).sort((a, b) => ORD[a.s] - ORD[b.s]);
+    return `<figure class="ph"><button data-id="${its[0] ? its[0].id : ""}" aria-label="Abrir: ${esc(CAP[f])}"><img src="${PH[f] || ""}" alt="${esc(CAP[f])}" loading="lazy"><span class="loc">${LOC[k]}</span></button><figcaption><h3>${esc(CAP[f])}</h3><ul>${its.map(x => `<li><button class="s-${x.s}" data-id="${x.id}"><i></i><span>${esc(x.t)}</span></button></li>`).join("")}</ul></figcaption></figure>`; })).join("");
+}
+function planRows() {
+  const q = norm(PF.q.trim());
+  return ALL.filter(x => (PF.k === "all" || x.k === PF.k) && (PF.s === "all" || x.s === PF.s) && (PF.nr === "all" || x.nrs.includes(PF.nr)) && (!q || norm(x.t + " " + x.p + " " + x.g + " " + x.n + " " + x.b).includes(q)))
+    .sort((a, b) => ORD[a.s] - ORD[b.s] || (a.k === b.k ? 0 : a.k === "piso" ? -1 : 1));
+}
+function renderPlan() {
+  const rows = planRows();
+  $("#tb").innerHTML = rows.length ? rows.map(x => `<tr data-id="${x.id}" tabindex="0"><td data-l="Gravidade">${svC(x.s)}</td><td data-l="Local">${LOC[x.k]}</td><td data-l="Ponto" class="item"><b>${esc(x.t)}</b>${esc(x.g)}</td><td data-l="Norma" class="nr">${esc(x.nrs.join(", "))}</td><td data-l="Prioridade">${PRI[x.s]}</td></tr>`).join("") : `<tr><td colspan="5" class="empty">Nenhum ponto com esses filtros.</td></tr>`;
+  $("#act").innerHTML = `${rows.length} de ${ALL.length} pontos` + (PF.nr !== "all" ? ` citando <b>${esc(PF.nr)}</b> <button class="tool" id="clr-nr">Limpar norma</button>` : "");
+}
+function renderNorms() {
+  const ns = Object.keys(NORM).map(n => [n, ALL.filter(x => x.nrs.includes(n)).length]).filter(([, c]) => c);
+  $("#nm").innerHTML = ns.map(([n, c]) => `<button class="norm" data-nr="${n}"><span><b>${n}</b><span>${NORM[n]}</span></span><em>${c}</em></button>`).join("");
+}
+function openItem(id, list) {
+  if (list) seq = list; if (!seq.length) seq = ALL.map(x => x.id);
+  pos = Math.max(0, seq.indexOf(id)); show();
+}
+function show() {
+  const x = ALL[seq[pos]], img = $("#m-img");
+  if (x.ph && PH[x.ph]) { img.src = PH[x.ph]; img.alt = "Foto: " + CAP[x.ph]; img.hidden = false; } else { img.hidden = true; img.removeAttribute("src"); }
+  $("#sheet").className = "sheet s-" + x.s; $("#m-sv").textContent = SEV[x.s]; $("#m-t").textContent = x.t;
+  $("#m-b").textContent = LOC[x.k] + ", " + x.b; $("#m-p").textContent = x.p; $("#m-n").textContent = x.n; $("#m-g").textContent = x.g; $("#m-pr").textContent = PRI[x.s];
+  $("#m-pos").textContent = `${pos + 1} de ${seq.length}`; $("#modal").hidden = false; $("#m-x").focus();
+}
+const closeM = () => { $("#modal").hidden = true; };
+document.addEventListener("click", e => {
+  const t = e.target.closest("button,tr[data-id],.modal"); if (!t) return;
+  if (t.classList.contains("tab")) { cur = t.dataset.k; MF = {s:"all", nr:"all"}; renderMap(); }
+  else if (t.dataset.mf) { MF.s = t.dataset.mf; renderMap(); }
+  else if (t.classList.contains("branch")) { const c = t.parentElement.classList.toggle("closed"); t.setAttribute("aria-expanded", !c); draw(); }
+  else if (t.id === "open-all" || t.id === "close-all") { const c = t.id === "close-all"; document.querySelectorAll(".br").forEach(b => { b.classList.toggle("closed", c); b.firstElementChild.setAttribute("aria-expanded", !c); }); draw(); }
+  else if (t.dataset.gf) { GF = t.dataset.gf; renderGal(); }
+  else if (t.dataset.nr) { PF = {q:"", k:"all", s:"all", nr:t.dataset.nr}; $("#q").value = ""; $("#fl").value = "all"; $("#fs").value = "all"; renderPlan(); $("#plano").scrollIntoView(); }
+  else if (t.id === "clr-nr") { PF.nr = "all"; renderPlan(); }
+  else if (t.dataset.id !== undefined && t.dataset.id !== "") {
+    const id = +t.dataset.id;
+    const list = t.closest("#tree") ? mapItems().map(x => x.id) : t.closest("#tb") ? planRows().map(x => x.id) : ALL.filter(x => x.ph).map(x => x.id);
+    openItem(id, list);
+  }
+  else if (t.id === "m-prev") { pos = (pos - 1 + seq.length) % seq.length; show(); }
+  else if (t.id === "m-next") { pos = (pos + 1) % seq.length; show(); }
+  else if (t.id === "m-x" || (t.id === "modal" && e.target === t)) closeM();
+});
+document.addEventListener("keydown", e => {
+  if (!$("#modal").hidden) { if (e.key === "Escape") closeM(); else if (e.key === "ArrowRight") $("#m-next").click(); else if (e.key === "ArrowLeft") $("#m-prev").click(); return; }
+  const tr = e.target.closest && e.target.closest("tr[data-id]"); if (tr && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); tr.click(); }
+});
+$("#mnr").addEventListener("change", e => { MF.nr = e.target.value; renderMap(); });
+$("#q").addEventListener("input", e => { PF.q = e.target.value; renderPlan(); });
+$("#fl").addEventListener("change", e => { PF.k = e.target.value; renderPlan(); });
+$("#fs").addEventListener("change", e => { PF.s = e.target.value; renderPlan(); });
+const ro = new ResizeObserver(() => draw()); ro.observe(mapEl); ro.observe($("#tree"));
+mapEl.addEventListener("scroll", draw);
+const links = [...document.querySelectorAll(".nav a")];
+const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) links.forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + en.target.id)); }), {rootMargin:"-40% 0px -55% 0px"});
+document.querySelectorAll("main section[id]").forEach(s => io.observe(s));
+hero(); renderMap(); renderGal(); renderPlan(); renderNorms();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+}
+</script>
+</body>
+</html>
