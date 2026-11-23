@@ -231,7 +231,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 32px;justify-content:space-betw
 </dl>
 <div class="figs" id="figs"></div>
 </div>
-<figure class="shot"><img id="hero-img" alt="Corredor do 2º piso com o abrigo do hidrante"><figcaption><b>Foto 3</b><span>Corredor do 2º piso: o hidrante está sinalizado, mas não há extintor em nenhum ponto do andar.</span></figcaption></figure>
+<figure class="shot"><img id="hero-img" alt="Corredor do 2º piso com o abrigo do hidrante"><figcaption><b>Foto 3</b><span>Corredor do 2º piso: abrigo do hidrante sinalizado e com demarcação no piso; a placa está desbotada.</span></figcaption></figure>
 </div></section>
 
 <section class="sec" id="mapas"><div class="wrap">
@@ -256,7 +256,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 32px;justify-content:space-betw
 </div></section>
 
 <section class="sec" id="evidencias"><div class="wrap">
-<div class="sec-h"><h2>Evidências fotográficas</h2><p>As 14 fotos da inspeção, com os achados que cada uma registra. Toque na foto para ampliar.</p></div>
+<div class="sec-h"><h2>Evidências fotográficas</h2><p>As 17 fotos da inspeção, com os achados que cada uma registra. Toque na foto para ampliar.</p></div>
 <div class="ctl"><div class="seg" role="group" aria-label="Local das fotos" id="gf"></div></div>
 <div class="gal" id="gal"></div>
 </div></section>
@@ -268,7 +268,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 32px;justify-content:space-betw
 
 <section class="sec" id="conclusao"><div class="wrap concl">
 <div><h2>Conclusão</h2><div style="margin-top:16px">
-<p>Os dois ambientes têm a sinalização básica de rota e de hidrante, mas falta o primeiro recurso de combate: nenhum extintor foi encontrado no 2º piso nem na biblioteca.</p>
+<p>O 2º piso tem os recursos básicos de combate, extintores de água e pó ABC e hidrante, e sinalização de rota, mas as placas dos extintores estão danificadas e fora do padrão. A biblioteca não tem extintor dentro da sala.</p>
 <p>A escada é a única rota de fuga dos pisos 1, 2 e 3 e concentra o portão de grade trancável, o quadro de força e o piso desgastado. Qualquer falha nela bloqueia a saída de todos.</p>
 <p>A biblioteca é uma sala fechada com alta carga de incêndio, saída única por porta com fechadura, sem iluminação de emergência, com improvisos elétricos perto de papel e cheiro de mofo relatado pela equipe.</p>
 </div></div>
@@ -295,13 +295,15 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 32px;justify-content:space-betw
 
 <script>
 {
-const PH = {"a": "a.jpg", "b": "b.jpg", "c": "c.jpg", "d": "d.jpg", "e": "e.jpg", "f": "f.jpg", "g": "g.jpg", "h": "h.jpg", "i": "i.jpg", "j": "j.jpg", "k": "k.jpg", "l": "l.jpg", "m": "m.jpg", "n": "n.jpg"};
-const CAP = {a:"Shaft das condensadoras, visto de dentro",b:"Corredor de acesso ao shaft",c:"Corredor do hidrante",d:"Patamar da escada e quadro de força",e:"Hidrante e luminária de emergência",f:"Portão de grade e escada",g:"Estantes e área de leitura",h:"Ar-condicionado e armários",i:"Mesa de estudo, janela e cabines",j:"Estabilizador embaixo da mesa",k:"Banheiro desativado usado como depósito",l:"Cabine de computador",m:"Ar-condicionado split, detalhe",n:"Porta da biblioteca"};
+const PH = {"a": "a.jpg", "b": "b.jpg", "c": "c.jpg", "d": "d.jpg", "e": "e.jpg", "f": "f.jpg", "g": "g.jpg", "h": "h.jpg", "i": "i.jpg", "j": "j.jpg", "k": "k.jpg", "l": "l.jpg", "m": "m.jpg", "n": "n.jpg", "o": "o.jpg", "p": "p.jpg", "q": "q.jpg"};
+const CAP = {o:"Extintores de água e pó ABC",p:"Portas de acesso restrito",q:"Banheiro feminino",a:"Shaft das condensadoras, visto de dentro",b:"Corredor de acesso ao shaft",c:"Corredor do hidrante",d:"Patamar da escada e quadro de força",e:"Hidrante e luminária de emergência",f:"Portão de grade e escada",g:"Estantes e área de leitura",h:"Ar-condicionado e armários",i:"Mesa de estudo, janela e cabines",j:"Estabilizador embaixo da mesa",k:"Banheiro desativado usado como depósito",l:"Cabine de computador",m:"Ar-condicionado split, detalhe",n:"Porta da biblioteca"};
 const SEV = {c:"Crítico",a:"Atenção",o:"Conforme"};
 const MAPS = {
-piso:{fotos:"abcdef",root:"2º piso",sub:"Corredores, shaft das condensadoras, hidrante e escada",br:[
+piso:{fotos:"abcdefopq",root:"2º piso",sub:"Corredores, extintores, hidrante, shaft, escada e banheiro",br:[
 {t:"Combate a incêndio",nr:"NR-23, NBR 12693, NBR 13714",l:[
-{s:"c",t:"Nenhum extintor nos corredores",ph:"c",p:"Nas fotos dos corredores não aparece nenhum extintor: nem junto ao hidrante, nem ao quadro de força, nem no acesso ao shaft das condensadoras.",n:"NR-23 (medidas de prevenção conforme a legislação estadual e as normas técnicas); NBR 12693; normas técnicas do CBMMA.",g:"Confirmar no projeto aprovado pelo Corpo de Bombeiros a quantidade exigida e instalar extintores de pó ABC e de CO₂ junto ao hidrante e ao quadro, com placa e demarcação no piso."},
+{s:"o",t:"Extintores de água e pó ABC",ph:"o",p:"Há no 2º piso um extintor de água pressurizada de 10 L (capacidade 2-A) e um de pó ABC, os dois com mangueira, lacre, manômetro e selo do Inmetro. O pó ABC cobre as classes A, B e C, inclusive equipamentos elétricos energizados.",n:"NR-23; NBR 12693.",g:"Manter. Na inspeção mensal, conferir o ponteiro do manômetro na faixa verde, o lacre intacto e a validade da recarga."},
+{s:"a",t:"Placas de extintor danificadas e fora do padrão",ph:"o",p:"As placas são do modelo antigo, amarelo e vermelho com seta. A do pó está rasgada e indica “pó químico” para as classes B e C, enquanto o extintor instalado é ABC.",n:"NR-26; NBR 16820.",g:"Trocar pelas placas fotoluminescentes da NBR 16820, com a classe correta de cada extintor."},
+{s:"a",t:"Validade, altura e demarcação a confirmar",ph:"o",p:"A etiqueta de manutenção não fica legível na foto, que também não mostra a altura de instalação nem se há demarcação no piso abaixo dos extintores.",n:"NBR 12962 (inspeção, manutenção e recarga de extintores); NBR 12693.",g:"Conferir a data da última recarga e do teste hidrostático, a altura do suporte e a demarcação do piso."},
 {s:"o",t:"Hidrante sinalizado e sem tranca",ph:"e",p:"Abrigo de mangueira com placa acima, demarcação no piso e porta sem tranca. A alimentação vem da rede vermelha que passa pelo shaft.",n:"NBR 13714; NBR 16820.",g:"Manter. Registrar a inspeção periódica das mangueiras."},
 {s:"a",t:"Abrigo não inspecionado por dentro",ph:"c",p:"O abrigo não foi aberto na inspeção, então não foi possível conferir mangueira, esguicho, chave de mangueira nem etiqueta de inspeção.",n:"NBR 13714; NBR 12779 (inspeção e manutenção de mangueiras).",g:"Abrir o abrigo, conferir os componentes e a data da última inspeção da mangueira."},
 {s:"a",t:"Placa do hidrante desbotada",ph:"e",p:"Fundo vermelho desbotado. Placa fotoluminescente perde brilho com o tempo.",n:"NBR 16820.",g:"Testar a placa no escuro, trocar se necessário e confirmar o símbolo padrão na norma técnica do CBMMA."}]},
@@ -311,16 +313,20 @@ piso:{fotos:"abcdef",root:"2º piso",sub:"Corredores, shaft das condensadoras, h
 {s:"a",t:"Rota de fuga única",ph:"f",p:"Há uma só escada, que liga o 1º, o 2º e o 3º piso e desce até a rua. Toda a evacuação do 2º e do 3º andar depende dela, e o portão trancável, o quadro de força e o piso desgastado estão justamente nessa rota. As placas de saída indicam o caminho, mas não criam uma segunda opção.",n:"NBR 9077; norma técnica de saídas de emergência do CBMMA (o número de saídas exigido depende da altura, da área e da lotação).",g:"Conferir no projeto aprovado se uma escada atende a lotação e tratar como prioridade tudo o que está sobre ela: portão destrancado, piso em bom estado, quadro protegido e escada sempre livre."},
 {s:"o",t:"Corrimão e faixas antiderrapantes",ph:"d",p:"Corrimão dos dois lados e faixas antiderrapantes nos degraus.",n:"NBR 9077.",g:"Manter. Prender a faixa branca descolada acima do corrimão e verificar a fixação do painel suspenso sobre a escada."}]},
 {t:"Sinalização",nr:"NR-26, NBR 16820, NBR 6493",l:[
+{s:"o",t:"Aviso de acesso restrito",ph:"p",p:"As duas portas de uso interno têm aviso de acesso restrito a funcionários.",n:"NR-26.",g:"Manter. Trocar a folha impressa por placa rígida e durável."},
 {s:"o",t:"Placa de saída na escada",ph:"d",p:"Placa verde de saída com seta de descida, bem posicionada no patamar.",n:"NBR 16820.",g:"Manter e incluir na rotina de inspeção."},
 {s:"a",t:"Orientação de rota incompleta",ph:"b",p:"Há seta de saída no corredor da biblioteca, mas o corredor do shaft e o cruzamento do hidrante não têm nenhuma; ali a única placa é a de Wi-Fi.",n:"NR-23 (vias de passagem sinalizadas com a direção da saída); NBR 16820.",g:"Instalar placas fotoluminescentes de orientação em cada mudança de direção até a escada."},
 {s:"a",t:"Quadro e shaft sem alerta padronizado",ph:"d",p:"O quadro tem a placa “Quadro de força”, mas não o triângulo amarelo de risco elétrico. O shaft não tem aviso de risco nem de acesso restrito.",n:"NR-26; NR-10; NBR 16820.",g:"Colocar placa de alerta de risco de choque elétrico no quadro e placa de acesso restrito no shaft."},
 {s:"a",t:"Tubulação de incêndio sem identificação",ph:"a",p:"Tubo vermelho no shaft, provavelmente a rede de hidrantes, sem identificação de fluido nem sentido de fluxo.",n:"NR-26; NBR 6493.",g:"Identificar a tubulação com etiqueta ou faixa e seta de fluxo."}]},
 {t:"Iluminação de emergência",nr:"NBR 10898",l:[
+{s:"a",t:"Banheiros e portas internas sem luz de emergência",ph:"q",p:"No corredor das portas de acesso restrito e no banheiro feminino não aparecem luminária de emergência nem seta de saída.",n:"NBR 10898; NBR 16820.",g:"Avaliar a cobertura da iluminação de emergência e instalar bloco autônomo e seta de saída onde faltar."},
 {s:"o",t:"Bloco autônomo funcionando",ph:"e",p:"Luminária de emergência no cruzamento do hidrante, com o LED de carga aceso.",n:"NBR 10898.",g:"Manter e testar todo mês, registrando o teste."},
 {s:"a",t:"Luminária ligada em tomada comum",ph:"e",p:"A luminária está ligada numa tomada e montada na vertical. Se só o circuito da iluminação cair, ela não acende.",n:"NBR 10898.",g:"Ligar no mesmo circuito da iluminação do ambiente e instalar na posição indicada pelo fabricante."},
 {s:"a",t:"Corredor do shaft sem iluminação",ph:"b",p:"Não aparece luminária de emergência no corredor sem saída junto ao shaft.",n:"NBR 10898; NR-23.",g:"Avaliar a cobertura e instalar bloco autônomo se o corredor for área de circulação."}]},
 {t:"Instalações elétricas",nr:"NR-10, NBR 5410",l:[
 {s:"c",t:"Fiação exposta com emendas em fita",ph:"b",p:"Feixe de cabos sem eletroduto, com emendas em fita isolante, descendo pela quina do corredor e pelo shaft. É fonte de ignição em área de passagem.",n:"NR-10; NBR 5410 (condutores protegidos em eletroduto ou eletrocalha).",g:"Refazer as emendas com conectores adequados e passar os cabos em eletroduto ou eletrocalha, com profissional habilitado."},
+{s:"a",t:"Fio solto no alto da parede",ph:"p",p:"Fio passando solto, fora de eletroduto, no alto da parede do corredor das portas de acesso restrito.",n:"NR-10; NBR 5410.",g:"Retirar o fio se estiver desativado ou passá-lo em eletroduto ou canaleta."},
+{s:"a",t:"Soquete exposto no box do banheiro",ph:"q",p:"No teto do box do banheiro feminino há um soquete sem lâmpada e sem luminária, em área úmida.",n:"NR-10; NBR 5410.",g:"Instalar luminária fechada própria para área úmida ou isolar o ponto."},
 {s:"a",t:"Quadro de força na única escada",ph:"d",p:"O quadro fica no patamar da rota de fuga do 2º e do 3º andar. Um foco ali bloqueia a saída.",n:"NR-10; NR-23.",g:"Manter trancado e desobstruído, com extintor de CO₂ ao lado e inspeção periódica."},
 {s:"a",t:"Cabos de rede soltos",ph:"d",p:"Cabos de rede e de sensores passando soltos pela parede acima do quadro.",n:"NBR 5410.",g:"Organizar em canaleta ou eletroduto, separados dos circuitos de energia."}]},
 {t:"Edificação e piso",nr:"NR-8, NR-35",l:[
@@ -330,7 +336,7 @@ piso:{fotos:"abcdef",root:"2º piso",sub:"Corredores, shaft das condensadoras, h
 ]},
 bib:{fotos:"nghijklm",root:"Biblioteca",sub:"Alta carga de incêndio: papel, plástico e computadores",br:[
 {t:"Combate a incêndio",nr:"NR-23, NBR 12693",l:[
-{s:"c",t:"Nenhum extintor na biblioteca",ph:"g",p:"Sala com muito papel, móveis de plástico e computadores, sem nenhum extintor visível.",n:"NR-23; NBR 12693; normas técnicas do CBMMA.",g:"Instalar extintor de água pressurizada ou pó ABC para os livros e de CO₂ para os computadores, perto da porta e sinalizados."},
+{s:"a",t:"Sem extintor dentro da biblioteca",ph:"g",p:"Não há extintor dentro da sala, que concentra papel, plástico e computadores. O 2º piso tem extintores de água e pó ABC, mas a distância até a biblioteca não foi medida.",n:"NR-23; NBR 12693 (distância máxima a percorrer até o extintor); normas técnicas do CBMMA.",g:"Medir o caminho até o extintor mais próximo. Se passar do limite, ou para proteger melhor os computadores, instalar um extintor junto à porta, de preferência de CO₂."},
 {s:"a",t:"Sem detecção de fumaça",ph:"g",p:"Não aparece detector de fumaça nem acionador manual de alarme.",n:"Norma técnica de alarme e detecção do CBMMA (a exigência depende da área e da ocupação).",g:"Verificar no projeto se é exigido. Mesmo sem exigência, um detector ajuda numa sala com essa carga de incêndio."}]},
 {t:"Saída e sinalização",nr:"NR-26, NBR 16820, NBR 10898",l:[
 {s:"c",t:"Sem iluminação de emergência na sala",ph:"i",p:"Dentro da biblioteca não aparece luminária de emergência nem placa de saída sobre a porta. Sem energia, a sala fica escura com estantes e cabines no caminho.",n:"NR-23; NBR 10898; NBR 16820.",g:"Instalar bloco autônomo cobrindo o caminho até a porta e placa de saída sobre ela, pelo lado de dentro."},
@@ -359,13 +365,13 @@ bib:{fotos:"nghijklm",root:"Biblioteca",sub:"Alta carga de incêndio: papel, pl�
 
 const PRI = {c:"Imediata",a:"Planejada",o:"Manter"};
 const LOC = {piso:"2º piso",bib:"Biblioteca"};
-const NORM = {"NR-23":"Proteção contra incêndios","NR-10":"Segurança em eletricidade","NR-8":"Edificações","NR-26":"Sinalização de segurança","NR-9":"Agentes biológicos","NR-17":"Ergonomia","NR-35":"Trabalho em altura","NBR 16820":"Sinalização de emergência","NBR 12693":"Extintores","NBR 13714":"Hidrantes e mangotinhos","NBR 12779":"Mangueiras de incêndio","NBR 10898":"Iluminação de emergência","NBR 9077":"Saídas de emergência","NBR 5410":"Instalações elétricas","NBR 6493":"Cores de tubulações","Lei 13.589/2018":"PMOC, climatização","RE 9/2003":"Qualidade do ar, ANVISA","CBMMA":"Corpo de Bombeiros do MA"};
+const NORM = {"NR-23":"Proteção contra incêndios","NR-10":"Segurança em eletricidade","NR-8":"Edificações","NR-26":"Sinalização de segurança","NR-9":"Agentes biológicos","NR-17":"Ergonomia","NR-35":"Trabalho em altura","NBR 16820":"Sinalização de emergência","NBR 12693":"Extintores","NBR 12962":"Manutenção de extintores","NBR 13714":"Hidrantes e mangotinhos","NBR 12779":"Mangueiras de incêndio","NBR 10898":"Iluminação de emergência","NBR 9077":"Saídas de emergência","NBR 5410":"Instalações elétricas","NBR 6493":"Cores de tubulações","Lei 13.589/2018":"PMOC, climatização","RE 9/2003":"Qualidade do ar, ANVISA","CBMMA":"Corpo de Bombeiros do MA"};
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const fold = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 const nrsOf = s => [...new Set(s.match(/NR-\d+|NBR \d+|Lei 13\.589\/2018|RE 9\/2003|CBMMA/g) || [])];
 const ORD = {c:0,a:1,o:2};
-const FOTO_N = {}; [..."abcdefnghijklm"].forEach((f, i) => FOTO_N[f] = i + 1);
+const FOTO_N = {}; [..."abcdefopqnghijklm"].forEach((f, i) => FOTO_N[f] = i + 1);
 const ALL = [];
 for (const k of ["piso","bib"]) { let n = 0; MAPS[k].br.forEach((b, bi) => b.l.forEach(x => { n++; ALL.push({...x, k, b:b.t, bi, code:(k === "piso" ? "P-" : "B-") + String(n).padStart(2, "0"), nrs:nrsOf(x.n)}); })); }
 ALL.forEach((x, i) => x.id = i);
@@ -444,7 +450,7 @@ function paintF() {
   $("#dr-b").innerHTML = (x.ph && PH[x.ph] ? `<img src="${PH[x.ph]}" alt="${esc(CAP[x.ph])}">` : "") + `<div class="dr-c">${sevL(x.s)}<h3 id="dr-t">${esc(x.t)}</h3><p class="wh">${LOC[x.k]}, ${esc(x.b)}${x.ph ? `, foto ${FOTO_N[x.ph]}` : ""}</p><dl><dt>Ponto observado</dt><dd>${esc(x.p)}</dd><dt>Norma implicada</dt><dd>${esc(x.n)}</dd><dt>Ação recomendada</dt><dd>${esc(x.g)}</dd><dt>Prioridade</dt><dd>${PRI[x.s]}</dd></dl></div>`;
   $("#dr-pos").textContent = `${pos + 1} de ${seq.length}`; $("#dr-b").scrollTop = 0;
 }
-const FOTOS = [..."abcdefnghijklm"];
+const FOTOS = [..."abcdefopqnghijklm"];
 function showP(f) { mode = "p"; pos = FOTOS.indexOf(f); paintP(); openDr(); }
 function paintP() {
   const f = FOTOS[pos], k = MAPS.piso.fotos.includes(f) ? "piso" : "bib", its = ALL.filter(x => x.k === k && x.ph === f).sort((a, b) => ORD[a.s] - ORD[b.s]);
