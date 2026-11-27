@@ -38,9 +38,18 @@ button:focus-visible{outline:2px solid var(--steel);outline-offset:2px}
 .btn:hover{border-color:#46505a}.btn.on{background:var(--steel);color:#111;border-color:var(--steel)}
 .btn:disabled{opacity:.4;cursor:default}
 .bar .hint{font-size:13px;color:var(--soft);flex:1 1 220px}
-.console{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.4fr);gap:16px;margin-top:16px;align-items:start}
+.console{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px;margin-top:16px;align-items:stretch}
+.scene{display:flex;flex-direction:column;background-color:#12161a;background-image:linear-gradient(#1e2429 1px,transparent 1px),linear-gradient(90deg,#1e2429 1px,transparent 1px);background-size:18px 18px;overflow:hidden}
+.scene svg{flex:1;margin:auto 0}.scene .legend{margin-top:auto;background:var(--p1)}
+.story{padding:22px;display:flex;flex-direction:column;gap:14px}
+.story .tag{align-self:flex-start;font-size:13px;font-weight:600;color:var(--c);border:1px solid var(--c);border-radius:8px;padding:3px 10px}
+.story h3{font-size:24px;line-height:1.15}.story p{margin:0;color:#c9d0d6}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:auto 0 0}
+.facts div{background:var(--p2);padding:10px 12px}.facts dt{font-size:12.5px;color:var(--soft)}.facts dd{margin:2px 0 0;font-size:14.5px;font-weight:500}
+.read{margin-top:16px;display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:center}
+.read>div{display:flex;flex-direction:column;gap:16px}.read>div:last-child{width:100%;max-width:430px;justify-self:end;gap:6px}
 .panel{background:var(--p1);border:1px solid var(--line);border-radius:16px}
-.read{padding:20px;display:flex;flex-direction:column;gap:16px}
+.read{padding:22px}
 .read h3{color:var(--soft);font:500 14px Inter,sans-serif}
 .num{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap}
 .num strong{font:700 clamp(72px,10vw,112px)/.85 var(--hd);color:var(--lc);letter-spacing:-.04em}
@@ -56,7 +65,7 @@ button:focus-visible{outline:2px solid var(--steel);outline-offset:2px}
 .seg button{min-height:40px;border:0;border-radius:8px;background:transparent;color:var(--soft);font:600 14px Inter,sans-serif;cursor:pointer}
 .seg button.on{background:var(--p2);color:var(--ink);box-shadow:inset 0 0 0 1px #3a434c}
 .note{font-size:13px;color:var(--soft);margin:0}
-.scene svg{display:block;width:100%;height:auto;border-radius:16px 16px 0 0}
+.scene svg{display:block;width:100%;height:auto}
 .legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:10px;border-top:1px solid var(--line)}
 .hs{display:flex;gap:10px;align-items:flex-start;text-align:left;font:inherit;font-size:14px;line-height:1.35;color:var(--ink);background:none;border:1px solid transparent;border-radius:10px;padding:8px;cursor:pointer;min-height:44px}
 .hs b{flex:none;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;border:2px solid var(--red);color:#ff8f86;font-size:12px}
@@ -87,8 +96,8 @@ footer{border-top:1px solid var(--line);font-size:14px;color:var(--soft)}footer 
 .gear{transform-origin:110px 205px;animation:spin 3s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.gear{animation:none}.gauge b{transition:none}}
-@media(max-width:900px){.console,.qs,.des{grid-template-columns:minmax(0,1fr)}}
-@media(max-width:640px){.legend{grid-template-columns:minmax(0,1fr)}.inv{grid-template-columns:minmax(0,1fr)}.inv dt{border-bottom:0;padding-bottom:0}
+@media(max-width:900px){.console,.qs,.des,.read{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:640px){.legend{grid-template-columns:minmax(0,1fr)}.facts{grid-template-columns:minmax(0,1fr)}.inv{grid-template-columns:minmax(0,1fr)}.inv dt{border-bottom:0;padding-bottom:0}
  .row{grid-template-columns:minmax(0,1fr);gap:10px}}
 </style>
 </head>
@@ -108,12 +117,13 @@ footer{border-top:1px solid var(--line);font-size:14px;color:var(--soft)}footer 
   <span class="hint">O modo discussão esconde as respostas para a turma pensar antes. Setas ← → do teclado trocam o ambiente.</span>
  </div>
  <div class="console">
-  <div class="panel read" id="meter"></div>
-  <figure class="panel scene" style="margin:0">
-   <svg id="scene" viewBox="0 0 600 340" role="img" aria-label="Planta do ambiente com os perigos numerados"></svg>
+  <figure class="panel scene" id="scenebox" style="margin:0">
+   <svg id="scene" viewBox="0 0 600 340" role="img" aria-label="Ilustração do ambiente com os perigos numerados"></svg>
    <figcaption class="legend" id="legend"></figcaption>
   </figure>
+  <article class="panel story" id="story"></article>
  </div>
+ <div class="panel read" id="meter"></div>
 </div></section>
 
 <section class="band" style="padding-top:0"><div class="wrap">
@@ -194,6 +204,33 @@ const E=[
  p:[5,5],d:[1,5],dano:"Incêndio ou explosão"}];
 
 
+const X={
+almoxarifado:{t:"Fim de tarde no almoxarifado",
+ d:"Almoxarifado no térreo de um prédio comercial, onde ficam resmas de papel, material de limpeza e arquivo morto. A paleteira manual usada para descer os paletes do caminhão vaza óleo hidráulico há semanas, e a mancha já se espalhou pelo corredor principal. No canto, uma fragmentadora de grande porte tritura documentos antigos; a tampa de acrílico que cobria a boca de alimentação quebrou e foi jogada fora. Hoje, um auxiliar contratado há três dias recebeu a tarefa de fragmentar 40 caixas de arquivo até o fim do expediente, sem que ninguém mostrasse como a máquina funciona.",
+ f:[["Setor","Administrativo e serviços"],["Momento","Fim do expediente, com prazo"],["Expostos","2 auxiliares administrativos"],["Normas principais","NR-1 e NR-12"]],
+ w:"O prazo de 40 caixas em um dia e a falta de orientação empurram o auxiliar para a pressa. O problema começa na forma como a tarefa foi passada a ele.",
+ i:"Mesmo onde o risco parece pequeno, o perigo precisa estar no inventário: é o registro que impede que uma fragmentadora quebrada passe a ser vista como normal."},
+oficina:{t:"Sábado de movimento na oficina",
+ d:"Oficina mecânica de bairro com dois elevadores automotivos e uma bancada de ajustes. No sábado, dia mais cheio, as trocas de óleo são feitas às pressas: o óleo usado transborda da bandeja e fica no piso do box. Na bancada, um esmeril é usado para rebarbar peças e afiar ferramentas; o protetor do rebolo foi retirado porque “atrapalhava” e o visor está rachado. Um aprendiz que começou na semana passada foi mandado desbastar um suporte de escapamento enquanto os mecânicos atendem os clientes.",
+ f:[["Setor","Serviços automotivos"],["Momento","Sábado, pico de clientes"],["Expostos","3 mecânicos e 1 aprendiz"],["Normas principais","NR-1, NR-6 e NR-12"]],
+ w:"Aprendiz precisa de supervisão direta. Deixá-lo sozinho no esmeril num dia de pico foi decisão de quem organiza o trabalho, não dele.",
+ i:"Na oficina, o inventário também deve tratar o óleo usado como resíduo perigoso, já que o derramamento se repete toda semana."},
+distribuicao:{t:"Véspera de feriado no centro de distribuição",
+ d:"Galpão de 4 mil m² com porta-paletes de cinco níveis, onde circulam três empilhadeiras e uma equipe de conferentes a pé. Com a expedição atrasada, o supervisor pediu a um repositor que ajudasse a carregar os caminhões usando a empilhadeira reserva. Essa máquina está com a mangueira hidráulica vazando, deixando um rastro de óleo nos corredores, e teve a grade de proteção do operador retirada para passar sob uma porta baixa. O alarme de ré está queimado. O repositor nunca fez o curso de operador.",
+ f:[["Setor","Logística e armazenagem"],["Momento","Noite, expedição atrasada"],["Expostos","12 operadores e conferentes"],["Normas principais","NR-1, NR-11 e NR-12"]],
+ w:"Quem entregou a empilhadeira ao repositor foi o supervisor. Sem curso e sem autorização, ele não deveria nem ter recebido a chave.",
+ i:"Aqui o inventário precisa incluir os pedestres: os conferentes correm risco mesmo sem operar a máquina."},
+metalurgica:{t:"Troca de turno na estamparia",
+ d:"Metalúrgica que estampa suportes de aço para a indústria automotiva, com seis prensas excêntricas trabalhando com meta de peças por hora. Uma das prensas mais antigas não tem cortina de luz, comando bimanual nem enclausuramento: o operador coloca a chapa com a mão, pisa no pedal e retira a peça. O sistema hidráulico vaza e há óleo de corte em volta da máquina. Na troca de turno, um operador recém-transferido de outro setor assumiu essa prensa depois de apenas observar o colega por alguns minutos.",
+ f:[["Setor","Indústria metalúrgica"],["Momento","Troca de turno, meta por hora"],["Expostos","6 operadores por turno"],["Normas principais","NR-1 e NR-12"]],
+ w:"Com meta por hora e máquina sem proteção, o acidente é questão de tempo. A NR-12 exige que a proteção funcione justamente quando o operador erra.",
+ i:"Para máquinas, o inventário deve apontar a falta de proteção como perigo específico, indicando o que a NR-12 exige e não está atendido."},
+combustiveis:{t:"Carregamento noturno no depósito de combustíveis",
+ d:"Base de distribuição com tanques de diesel e uma plataforma de carregamento de caminhões-tanque. A bomba de transferência fica sobre uma base aberta: o eixo e o acoplamento entre motor e bomba giram sem proteção, e o motor elétrico não é certificado para atmosfera explosiva. Uma conexão mal apertada deixou diesel acumulado na área das bombas, liberando vapores no calor da noite. Um terceirizado da limpeza, sem curso de inflamáveis, foi chamado para “ajudar” no carregamento e opera a bomba enquanto fala ao celular.",
+ f:[["Setor","Armazenamento de inflamáveis"],["Momento","Noite, carregamento de caminhões"],["Expostos","Operadores, motoristas e vizinhança"],["Normas principais","NR-1, NR-12 e NR-20"]],
+ w:"Colocar um terceirizado sem capacitação NR-20 na operação é falha grave de gestão: a empresa responde pela segurança de quem trabalha na sua área.",
+ i:"Com inflamáveis, o inventário deve prever cenários de emergência que atingem várias pessoas e até a vizinhança, não só quem executa a tarefa."}};
+E.forEach(e=>Object.assign(e,X[e.id]));
 let cur=0,depois=false,disc=false,hot=0;
 const $=id=>document.getElementById(id);
 const li=a=>"<ul>"+a.map(x=>"<li>"+x+"</li>").join("")+"</ul>";
@@ -207,31 +244,67 @@ function scale(){
 function scene(e){
  const [,c]=LV(e.p[0]*e.p[1]);
  const L=(d,w=2,col=ST2)=>`<path d="${d}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
+ const S="#c3ccd4",R="#e8251a",F="#1a1f24";
+ const box=(x,y,w,h,r=4,st=S)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${F}" stroke="${st}" stroke-width="2"/>`;
+ const dash=(x,y,w,h)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="4" fill="#e8251a14" stroke="${R}" stroke-width="2" stroke-dasharray="6 5"/>`;
+ const wheel=(x,y,r,col=S,spin=0)=>`<g${spin?` class="gear" style="transform-origin:${x}px ${y}px"`:""}><circle cx="${x}" cy="${y}" r="${r}" fill="${F}" stroke="${col}" stroke-width="2"/>${[0,60,120].map(a=>`<line x1="${x}" y1="${y-r+3}" x2="${x}" y2="${y+r-3}" stroke="${col}" stroke-width="2" transform="rotate(${a} ${x} ${y})"/>`).join("")}<circle cx="${x}" cy="${y}" r="${Math.max(2.5,r/5)}" fill="${col}"/></g>`;
+ const worker=(x,tx,ty,phone)=>{const sx=tx>x?x+24:x-24;return `<g fill="${F}" stroke="${S}" stroke-width="2" stroke-linejoin="round"><rect x="${x-20}" y="232" width="15" height="70" rx="7"/><rect x="${x+4}" y="232" width="15" height="70" rx="7"/><rect x="${x-30}" y="160" width="60" height="82" rx="18"/><circle cx="${x}" cy="136" r="19"/></g>${L(`M${sx} 178L${tx} ${ty}`,12,S)}${L(`M${sx} 178L${tx} ${ty}`,8,F)}${phone?`<rect x="${tx-6}" y="${ty-16}" width="12" height="20" rx="3" fill="${R}"/>`:""}`};
+ const puddle=(cx,cy,rx)=>`<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${rx/4.5}" fill="url(#oil)" stroke="${R}" stroke-width="1.5" stroke-dasharray="5 5"/>`;
+ const drip=(x,y1,y2)=>L(`M${x} ${y1}V${y2}`,2,R)+`<circle cx="${x}" cy="${y2+5}" r="3" fill="${R}"/>`;
  let back="";
- if(e.bg==="shelves")back=L("M330 40V230M570 40V230M330 92H570M330 150H570M330 208H570")+[0,1,2].map(r=>[0,1,2,3].map(k=>`<rect x="${342+k*56}" y="${60+r*58}" width="${40+(k%2)*6}" height="30" rx="3" fill="#1d2329" stroke="${ST}" stroke-width="1.5"/>`).join("")).join("");
- if(e.bg==="bench")back=L("M340 150H570M350 150V230M560 150V230")+`<rect x="350" y="52" width="210" height="76" rx="6" fill="#1d2329" stroke="${ST}" stroke-width="1.5"/>`+[0,1,2,3,4].map(k=>L(`M${372+k*40} 68v${30+k%2*12}`,4,ST2)).join("");
- if(e.bg==="pipes")back=L("M300 72H590M300 104H590M520 104V230",6,ST)+`<rect x="340" y="148" width="130" height="82" rx="8" fill="#1d2329" stroke="${ST}" stroke-width="1.5"/>`+L("M356 168H454",3,ST2);
- if(e.bg==="tanks")back=[0,1].map(k=>`<rect x="${330+k*125}" y="48" width="105" height="182" rx="18" fill="#1d2329" stroke="${ST}" stroke-width="1.5"/>`+L(`M${330+k*125} 74H${435+k*125}`,1.5,ST)+`<g transform="translate(${382+k*125} 140)"><rect x="-15" y="-15" width="30" height="30" fill="none" stroke="#e8251a" stroke-width="2" transform="rotate(45)"/><path d="M0 -11C8 -2 7 9 0 11C-7 9 -8 0-2-5C-1 0 2 1 0-11Z" fill="#e8251a"/></g>`).join("");
- const vapor=e.fuel?[0,1,2].map(k=>L(`M${232+k*22} 266q7 -11 0 -22q-7 -11 0 -22`,2,"#e8251a")).join(""):"";
- const ring=(x,y,k)=>{const a=hot===k;return `<g class="pin" data-k="${k}" style="cursor:pointer"><circle cx="${x}" cy="${y}" r="26" fill="${a?"#e8251a22":"none"}" stroke="#e8251a" stroke-width="1.5" stroke-dasharray="4 4"/><circle cx="${x}" cy="${y}" r="14" fill="${a?"#e8251a":"#0f1215"}" stroke="#e8251a" stroke-width="2"/><text x="${x}" y="${y+5}" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="14" fill="${a?"#fff":"#ff8f86"}">${k}</text></g>`};
+ if(e.bg==="shelves")back=L("M380 40V230M580 40V230M380 92H580M380 150H580M380 208H580")+[0,1,2].map(r=>[0,1,2].map(k=>`<rect x="${392+k*62}" y="${60+r*58}" width="${44+(k%2)*6}" height="30" rx="3" fill="#1d2329" stroke="${ST}" stroke-width="1.5"/>`).join("")).join("");
+ if(e.bg==="bench")back=L("M400 150H585M410 150V230M575 150V230")+`<rect x="410" y="52" width="170" height="76" rx="6" fill="#1d2329" stroke="${ST}" stroke-width="1.5"/>`+[0,1,2,3].map(k=>L(`M${432+k*40} 68v${30+k%2*12}`,4,ST2)).join("");
+ if(e.bg==="pipes")back=L("M380 72H590M380 104H590M540 104V230",6,ST)+`<rect x="420" y="150" width="130" height="80" rx="8" fill="#1d2329" stroke="${ST}" stroke-width="1.5"/>`+L("M436 170H534",3,ST2);
+ if(e.bg==="tanks")back=[0,1].map(k=>`<rect x="${400+k*100}" y="48" width="88" height="182" rx="18" fill="#1d2329" stroke="${ST}" stroke-width="1.5"/>`+L(`M${400+k*100} 74H${488+k*100}`,1.5,ST)+`<g transform="translate(${444+k*100} 140)"><rect x="-14" y="-14" width="28" height="28" fill="none" stroke="#e8251a" stroke-width="2" transform="rotate(45)"/><path d="M0 -10C7 -2 6 8 0 10C-6 8 -7 0-2-5C-1 0 2 1 0-10Z" fill="#e8251a"/></g>`).join("");
+ let art="",pins=[];
+ if(e.id==="almoxarifado"){
+  art=puddle(118,302,82)
+  +L("M74 296L56 226M46 224h20",4,S)+box(66,262,28,34,4)+box(66,288,124,9,3)+wheel(80,304,7)+wheel(180,304,7)+drip(86,296,290)
+  +box(232,196,86,106,6)+box(244,222,62,30,4)+wheel(260,237,10,R,1)+wheel(290,237,10,R,1)+dash(232,166,86,26)+L("M244 196H306",3,R)
+  +`<path d="M256 128H296L292 196H260Z" fill="#232a31" stroke="${S}" stroke-width="2"/>`+L("M264 145H288M264 158H288M264 171H284",1.5,ST2)
+  +worker(380,300,184);
+  pins=[[150,312],[214,150],[440,120]];}
+ if(e.id==="oficina"){
+  art=puddle(110,304,80)
+  +`<g transform="rotate(-62 60 282)">${box(36,252,40,56,6)}</g>`+L("M86 268L104 284",3,S)+drip(104,288,296)
+  +L("M210 230V298",5,S)+`<ellipse cx="210" cy="300" rx="34" ry="7" fill="${F}" stroke="${S}" stroke-width="2"/>`
+  +box(180,192,60,30,12)+wheel(158,207,22)+`<path d="M134 207A24 24 0 0 1 182 207" fill="none" stroke="${S}" stroke-width="6"/>`
+  +wheel(262,207,22,R,1)+L("M270 230l14 18M278 226l20 10M264 232l4 22",2,R)
+  +worker(350,280,198);
+  pins=[[150,314],[262,156],[412,120]];}
+ if(e.id==="distribuicao"){
+  art=puddle(176,312,84)
+  +box(82,222,140,64,12)+box(66,232,24,50,6)+L("M234 112V292M248 112V292M234 140H248M234 200H248",3,S)
+  +L("M246 292H322",5,S)+box(258,250,58,38,3)+L("M264 262H310",1.5,ST2)
+  +dash(104,148,114,74)+L("M110 222V148M212 222V148",2,R)
+  +`<g fill="${F}" stroke="${S}" stroke-width="2"><circle cx="152" cy="176" r="15"/><rect x="138" y="192" width="30" height="34" rx="9"/></g>`+L("M166 204L204 214",8,S)
+  +wheel(112,290,18,S,1)+wheel(200,290,18,S,1)+drip(178,286,298);
+  pins=[[244,314],[290,140],[60,176]];}
+ if(e.id==="metalurgica"){
+  art=puddle(170,308,92)
+  +box(50,276,190,20,3)+box(50,110,44,170,6)+box(50,110,190,40,8)+wheel(72,98,30,S,1)
+  +box(182,150,42,56,4)+box(110,248,130,14,3)+box(172,232,60,16,3)
+  +dash(166,206,72,26)+L("M130 296V306M220 296V306",2,S)+drip(232,262,284)
+  +worker(340,222,220);
+  pins=[[100,312],[138,200],[400,120]];}
+ if(e.id==="combustiveis"){
+  art=puddle(188,312,88)+[0,1,2].map(k=>L(`M${156+k*30} 300q7 -11 0 -22q-7 -11 0 -22`,2,R)).join("")
+  +box(36,280,240,14,3)+box(46,220,90,60,8)+L("M58 232V268M72 232V268M86 232V268M100 232V268M114 232V268",1.5,ST2)
+  +L("M136 250H184",5,S)+wheel(160,250,15,R,1)+`<circle cx="218" cy="250" r="28" fill="${F}" stroke="${S}" stroke-width="2"/>`
+  +L("M218 222V172H400",9,S)+L("M218 222V172H400",5,F)+L("M246 256H286",9,S)
+  +worker(340,320,186,1);
+  pins=[[100,314],[160,196],[396,120]];}
+ const ring=(x,y,k)=>{const a=hot===k;return `<g class="pin" data-k="${k}" style="cursor:pointer"><circle cx="${x}" cy="${y}" r="24" fill="${a?"#e8251a22":"none"}" stroke="#e8251a" stroke-width="1.5" stroke-dasharray="4 4"/><circle cx="${x}" cy="${y}" r="13" fill="${a?"#e8251a":"#0f1215"}" stroke="#e8251a" stroke-width="2"/><text x="${x}" y="${y+5}" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="13" fill="${a?"#fff":"#ff8f86"}">${k}</text></g>`};
  $("scene").innerHTML=`
  <defs><pattern id="g" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#1e2429" stroke-width="1"/></pattern>
  <radialGradient id="oil" cx=".45" cy=".4" r=".7"><stop offset="0" stop-color="#3a3320"/><stop offset="1" stop-color="#0b0a07"/></radialGradient></defs>
- <rect width="600" height="340" fill="#12161a"/><rect width="600" height="340" fill="url(#g)"/>
- <rect x="0" y="0" width="600" height="3" fill="${c}"/>
- ${back}
- ${L("M0 230H600",2,ST)}
- <ellipse cx="250" cy="282" rx="86" ry="22" fill="url(#oil)" stroke="#e8251a" stroke-width="1.5" stroke-dasharray="5 5"/>${vapor}
- <rect x="40" y="140" width="140" height="150" rx="12" fill="#1a1f24" stroke="${ST2}" stroke-width="2"/>
- ${L("M40 164H180M52 290V302M168 290V302",2,ST2)}
- <circle cx="110" cy="205" r="44" fill="#0f1215" stroke="#e8251a" stroke-width="2"/>
- <g class="gear"><circle cx="110" cy="205" r="34" fill="none" stroke="${"#c3ccd4"}" stroke-width="2"/>${[0,45,90,135].map(a=>`<line x1="110" y1="173" x2="110" y2="237" stroke="#c3ccd4" stroke-width="3" transform="rotate(${a} 110 205)"/>`).join("")}<circle cx="110" cy="205" r="8" fill="#c3ccd4"/></g>
- <g transform="translate(420 0)" fill="#1a1f24" stroke="${"#c3ccd4"}" stroke-width="2" stroke-linejoin="round">
-  <rect x="-20" y="232" width="15" height="70" rx="7"/><rect x="4" y="232" width="15" height="70" rx="7"/>
-  <rect x="-30" y="160" width="60" height="82" rx="18"/><path d="M-26 176 L-62 190" stroke-width="12" stroke-linecap="round" fill="none"/>
-  <circle cx="0" cy="136" r="19"/></g>
- ${ring(250,250,1)}${ring(110,118,2)}${ring(420,92,3)}`;
+ 
+ ${back}${L("M0 230H600",2,ST)}${art}${pins.map((p,i)=>ring(p[0],p[1],i+1)).join("")}`;
  $("legend").innerHTML=[e.oleo,e.maq,e.trab].map((t,i)=>`<button type="button" class="hs${hot===i+1?" act":""}" data-k="${i+1}"><b>${i+1}</b><span>${t}</span></button>`).join("");
+ $("scene").setAttribute("aria-label","Ilustração: "+e.nome+". 1: "+e.oleo+". 2: "+e.maq+". 3: "+e.trab+".");
+ const [l]=LV(e.p[0]*e.p[1]);
+ $("story").style.setProperty("--c",c);$("scenebox").style.boxShadow="inset 0 3px 0 "+c;
+ $("story").innerHTML=`<span class="tag">Cenário ${E.indexOf(e)+1} de ${E.length} · risco ${l.toLowerCase()}</span><h3>${e.t}</h3><p>${e.d}</p><dl class="facts">${e.f.map(x=>`<div><dt>${x[0]}</dt><dd>${x[1]}</dd></div>`).join("")}</dl>`;
 }
 
 function meter(e){
@@ -240,23 +313,23 @@ function meter(e){
  for(let p=5;p>=1;p--){cells+=`<div class="ax">${p}</div>`;for(let s=1;s<=5;s++){const m=p*s;cells+=`<div class="${p===v[0]&&s===v[1]?"pin":""}" style="background:${LV(m)[1]}">${m}</div>`}}
  cells+=`<div class="ax"></div>`+[1,2,3,4,5].map(s=>`<div class="ax">${s}</div>`).join("");
  $("meter").style.setProperty("--lc",c);
- $("meter").innerHTML=`<h3>${e.nome} · nível de risco ${depois?"depois das medidas":"atual"}</h3>
+ $("meter").innerHTML=`<div><h3>${e.nome} · nível de risco ${depois?"depois das medidas":"atual"}</h3>
  <div class="num"><strong>${n}</strong><span>${l}</span><small>Probabilidade ${v[0]} × severidade ${v[1]} · dano mais grave: ${e.dano.toLowerCase()}</small></div>
  <div class="gauge" aria-hidden="true"><b style="left:calc(${(n-1)/24*100}% - 2px)"></b></div>
  <div class="seg" role="group" aria-label="Momento da avaliação"><button type="button" class="${depois?"":"on"}" data-b="0">Antes</button><button type="button" class="${depois?"on":""}" data-b="1">Depois das medidas</button></div>
- <div class="mx" aria-label="Matriz de risco 5 por 5">${cells}</div>
- <div class="mxl"><span>↑ probabilidade</span><span>severidade →</span></div>
- <p class="note">Faixas: 1–4 baixo · 5–9 moderado · 10–16 alto · 20–25 crítico</p>`;
+<p class="note">Faixas: 1–4 baixo · 5–9 moderado · 10–16 alto · 20–25 crítico</p></div>
+ <div><div class="mx" aria-label="Matriz de risco 5 por 5">${cells}</div>
+ <div class="mxl"><span>↑ probabilidade</span><span>severidade →</span></div></div>`;
 }
 
 function qs(e){
  const n=e.p[0]*e.p[1],m=e.d[0]*e.d[1];
  const Q=[
  ["Identifique duas condições perigosas no ambiente.",li(e.q1)],
- ["Qual comportamento do trabalhador aumenta a exposição ao risco?",`<p>${e.q2}</p><p class="warn">Mas a culpa não é só dele: operar sem treinamento é falha da empresa, que deve capacitar antes de liberar a tarefa (NR-1). Punir o trabalhador sem corrigir isso não resolve.</p>`],
+ ["Qual comportamento do trabalhador aumenta a exposição ao risco?",`<p>${e.q2}</p><p class="warn">${e.w}</p>`],
  ["Cite dois danos que podem ocorrer.",li(e.q3)],
  ["Que medidas devem ser adotadas antes de continuar o trabalho?",li(e.q4)],
- ["Que informações devem constar no inventário de riscos?",`<p>Pela NR-1, no mínimo: o processo e o ambiente, as atividades, os perigos com suas fontes, as possíveis lesões, quem está exposto, as medidas já existentes, a avaliação do risco e o critério usado. Neste ambiente:</p>
+ ["Que informações devem constar no inventário de riscos?",`<p>${e.i} O registro abaixo segue o conteúdo mínimo da NR-1:</p>
  <dl class="inv"><dt>Processo / ambiente</dt><dd>${e.inv.proc}</dd><dt>Atividade</dt><dd>${e.inv.ativ}</dd>
  <dt>Perigos e fontes</dt><dd>${e.oleo}; ${e.maq.charAt(0).toLowerCase()+e.maq.slice(1)}; trabalhador sem treinamento</dd>
  <dt>Possíveis lesões ou agravos</dt><dd>${e.q3.join(" ")}</dd><dt>Trabalhadores expostos</dt><dd>${e.inv.exp}</dd>
