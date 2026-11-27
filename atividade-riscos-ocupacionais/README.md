@@ -12,7 +12,7 @@ Em cada ambiente o site responde às 5 questões da atividade, mostra o nível d
 
 Recursos: cena com perigos clicáveis, **modo discussão** (esconde as respostas para a turma pensar antes), navegação pelas setas do teclado e tabela comparativa.
 
-**Aluno:** Luan Christhian Correia Gonçalves
+**Alunos:** Luan Christhian Correia Gonçalves e Aurilene Leite Correia
 **Curso:** Técnico em Segurança do Trabalho — Turma TSEG1M26CO
 **Instituição:** Ana Neri — São Luís (MA), 2026
 
