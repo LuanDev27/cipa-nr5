@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Riscos Ocupacionais — Atividade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: sala de aula de SST, direto e prático, como uma inspeção de campo
+   IDEA: placa de sinalização de segurança + escala de criticidade de inspeção
+   PICTURE: cena do depósito em corte, com os 3 perigos marcados e numerados
+   COLOUR and TYPE: amarelo de segurança, preto, vermelho de perigo; Barlow Condensed + Barlow
+   LAYOUT: título, situação, escala de ambientes, cena + medidor, respostas, desafio, comparação */
+:root{color-scheme:light dark;
+ --bg:light-dark(#efeee9,#121314);--ink:light-dark(#151515,#f1f0ea);--soft:light-dark(#55534d,#b4b2aa);
+ --card:light-dark(#ffffff,#1c1d1f);--line:light-dark(#d6d4cc,#33353a);
+ --yel:#ffc20e;--red:#d7261e;--blk:#151515;--ok:#2f8f4e;--mod:#e0a100;--hi:#e8641b;--cr:#c51f1a;
+ --wall:light-dark(#dcdad2,#24262a);--floor:light-dark(#c6c3b8,#2c2e33)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Barlow,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:"Barlow Condensed","Arial Narrow",Barlow,sans-serif;line-height:1.05;margin:0;text-wrap:balance}
+h1{font-size:clamp(34px,6vw,52px)}h2{font-size:clamp(26px,3.6vw,34px);margin-bottom:14px}h3{font-size:22px}
+.band{padding:clamp(28px,4vw,56px) max(5vw,16px)}.wrap{max-width:1240px;margin:0 auto}
+.top{background:var(--yel);color:var(--blk);border-bottom:10px solid;border-image:repeating-linear-gradient(-45deg,var(--blk) 0 14px,var(--yel) 14px 28px) 10}
+.top p{margin:8px 0 0;font-weight:500}.who{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:16px;font-size:15px}
+.who b{font-weight:600}
+.sit{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;background:var(--blk);color:#fff;border-radius:12px;padding:18px 20px;margin-top:22px}
+.sit svg{width:52px;height:46px}.sit p{margin:0;font-size:18px}.sit small{display:block;color:#ffd75a;font-size:14px;margin-bottom:2px}
+.scale{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 10px}
+.scale button{flex:1 0 170px;scroll-snap-align:start;min-height:84px;text-align:left;font:inherit;color:var(--ink);background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;position:relative;display:flex;flex-direction:column;justify-content:flex-start}
+.scale button i{display:block;height:6px;border-radius:3px;margin-bottom:8px;background:var(--c)}
+.scale button span{font-size:13px;color:var(--soft)}.scale button strong{display:block;font-family:"Barlow Condensed","Arial Narrow",Barlow,sans-serif;font-size:20px;line-height:1.1}
+.scale button[aria-pressed=true]{border-color:var(--ink);box-shadow:0 4px 0 var(--ink)}
+.scale button:focus-visible,.btn:focus-visible,.hs:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.axis{display:flex;justify-content:space-between;font-size:13px;color:var(--soft);margin-top:2px}
+.nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.btn{min-height:44px;padding:0 16px;font:600 15px Barlow,sans-serif;border-radius:10px;border:2px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;white-space:nowrap}
+.btn.on{background:var(--ink);color:var(--bg)}
+.main{display:grid;align-items:start;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:22px;margin-top:22px}
+.scene{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.scene svg{display:block;width:100%;height:auto}
+.legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:12px;border-top:1px solid var(--line)}
+.hs{display:flex;gap:8px;align-items:flex-start;text-align:left;font:inherit;font-size:14px;line-height:1.3;color:var(--ink);background:none;border:0;border-radius:8px;padding:6px;cursor:pointer;min-height:44px}
+.hs b{flex:none;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--red);color:#fff;font-size:14px}
+.hs.act{background:light-dark(#fff3c4,#3a3110)}
+.meter{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.big{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}.big strong{font:700 clamp(54px,8vw,76px)/1 "Barlow Condensed","Arial Narrow",Barlow,sans-serif;color:var(--lc)}
+.big span{font:700 26px "Barlow Condensed","Arial Narrow",Barlow,sans-serif;color:var(--lc)}.big small{width:100%;color:var(--soft);font-size:14px}
+.mx{display:grid;grid-template-columns:22px repeat(5,minmax(0,1fr));gap:3px;font-size:12px;text-align:center}
+.mx div{aspect-ratio:1.5;display:grid;place-items:center;border-radius:4px;color:#151515;font-weight:600;position:relative}
+.mx .ax{background:none;color:var(--soft);aspect-ratio:auto}
+.mx .pin{outline:3px solid var(--ink);outline-offset:-1px;transform:scale(1.08);z-index:1}
+.mxl{display:flex;justify-content:space-between;font-size:12px;color:var(--soft)}
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:8px}.ba .btn{width:100%}
+.note{font-size:14px;color:var(--soft);margin:0}
+.qs{display:grid;gap:14px;margin-top:8px}
+.q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;display:grid;grid-template-columns:44px 1fr;gap:4px 14px}
+.q>b{grid-row:span 3;width:44px;height:44px;border-radius:10px;background:var(--yel);color:var(--blk);display:grid;place-items:center;font:700 24px "Barlow Condensed","Arial Narrow",Barlow,sans-serif}
+.q h3{font-size:21px;align-self:center}.q ul{margin:6px 0 0;padding-left:20px}.q li{margin:4px 0}.q p{margin:6px 0 0}
+.q .ans{transition:opacity .3s}.q.hid .ans{display:none}
+.q .reveal{display:none;justify-self:start;margin-top:8px}.q.hid .reveal{display:inline-block}
+.warn{border-left:4px solid var(--red);padding:6px 10px;background:light-dark(#fdecea,#2c1716);border-radius:0 8px 8px 0;font-size:15px}
+.inv{display:grid;grid-template-columns:minmax(0,13em) 1fr;margin-top:8px;border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:15px}
+.inv dt,.inv dd{margin:0;padding:8px 12px;border-bottom:1px solid var(--line)}.inv dt{font-weight:600;background:light-dark(#f6f5f0,#232428)}
+.inv dt:last-of-type,.inv dd:last-of-type{border-bottom:0}
+.des{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.d{border-radius:14px;padding:18px;background:var(--card);border:1px solid var(--line);border-top:8px solid var(--c)}
+.d h3{margin-bottom:6px}.d p{margin:0}.d span{font-size:13px;color:var(--soft);display:block;margin-bottom:4px}
+.darkband{background:var(--blk);color:#f1f0ea}.darkband h2{color:var(--yel)}
+table{width:100%;border-collapse:collapse;font-size:15px}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #3a3b3f;vertical-align:top}
+th{font-family:"Barlow Condensed","Arial Narrow",Barlow,sans-serif;font-size:17px;color:var(--yel)}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;color:#151515;font-weight:600;font-size:14px;white-space:nowrap}
+tr.cur td{background:#26272b}
+footer{font-size:14px;color:var(--soft)}footer p{margin:4px 0}
+.gear{transform-origin:118px 212px;animation:spin 2.4s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.gear{animation:none}.q .ans{transition:none}}
+@media(max-width:860px){.main{grid-template-columns:minmax(0,1fr)}.des{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){.legend{grid-template-columns:minmax(0,1fr)}.inv{grid-template-columns:minmax(0,1fr)}.inv dt{border-bottom:0;padding-bottom:0;background:none}
+ table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px;border-bottom:1px solid #3a3b3f}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:8em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:7.5em;margin-inline-start:-8em;white-space:normal;color:var(--yel)}.stack td:empty{display:none}}
+</style>
+<script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script>
+</head>
+<body>
+<header class="band top"><div class="wrap">
+ <h1>Atividade de fixação: prevenção de riscos ocupacionais</h1>
+ <p>A mesma situação aplicada a cinco ambientes de trabalho, do mais simples ao mais crítico.</p>
+ <div class="who"><span><b>Aluno:</b> Luan Christhian Correia Gonçalves</span><span><b>Curso:</b> Técnico em Segurança do Trabalho — Turma TSEG1M26CO</span><span><b>Instituição:</b> Ana Neri</span></div>
+ <div class="sit">
+  <svg viewBox="0 0 52 46" aria-hidden="true"><path d="M26 2 50 44H2Z" fill="#ffc20e" stroke="#151515" stroke-width="3" stroke-linejoin="round"/><rect x="23.5" y="15" width="5" height="16" rx="2" fill="#151515"/><circle cx="26" cy="37" r="3" fill="#151515"/></svg>
+  <p><small>Situação proposta</small>Em um depósito, há <b>óleo no piso</b>, uma <b>máquina sem proteção</b> e um <b>trabalhador operando sem treinamento</b>.</p>
+ </div>
+</div></header>
+
+<section class="band"><div class="wrap">
+ <h2>Escolha o ambiente</h2>
+ <div class="scale" id="scale" role="group" aria-label="Ambientes de trabalho"></div>
+ <div class="axis"><span>← mais simples</span><span>mais crítico →</span></div>
+ <div class="nav">
+  <button class="btn" id="prev" type="button">Anterior</button><button class="btn" id="next" type="button">Próximo</button>
+  <button class="btn" id="mode" type="button" aria-pressed="false">Modo discussão</button>
+ </div>
+ <p class="note" style="margin-top:8px">No modo discussão, as respostas ficam escondidas para a turma pensar antes. Use as setas ← → do teclado para trocar de ambiente.</p>
+
+ <div class="main">
+  <figure class="scene" style="margin:0">
+   <svg id="scene" viewBox="0 0 600 340" role="img" aria-label="Cena do ambiente com os perigos numerados"></svg>
+   <figcaption class="legend" id="legend"></figcaption>
+  </figure>
+  <div class="meter" id="meter"></div>
+ </div>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+ <h2 id="qtitle">Respostas</h2>
+ <div class="qs" id="qs"></div>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+ <h2>Desafio: eliminação, proteção coletiva e medida administrativa</h2>
+ <div class="des" id="des"></div>
+ <p class="note" style="margin-top:12px">Ordem da hierarquia de controles (NR-1): eliminar o perigo, depois proteção coletiva, depois medidas administrativas e, por último, EPI.</p>
+</div></section>
+
+<section class="band darkband"><div class="wrap">
+ <h2>Comparação entre os ambientes</h2>
+ <table class="stack"><thead><tr><th>Ambiente</th><th>Perigo principal</th><th>Dano mais grave</th><th>Antes</th><th>Depois</th></tr></thead><tbody id="cmp"></tbody></table>
+ <p style="margin:16px 0 0;font-size:15px;color:#c9c7bf">Nos cinco casos, as medidas reduzem a <b>probabilidade</b>, mas a <b>severidade</b> continua a mesma: a máquina e o produto continuam capazes de causar o dano. Por isso o risco residual precisa de acompanhamento permanente.</p>
+</div></section>
+
+<footer class="band"><div class="wrap">
+ <p><b>Luan Christhian Correia Gonçalves</b> — Técnico em Segurança do Trabalho, Ana Neri — São Luís (MA), 2026.</p>
+ <p>Ambientes e situações fictícios, criados para a atividade. Base: NR-1 (GRO/PGR), NR-11, NR-12 e NR-20. Matriz de risco 5×5: probabilidade × severidade.</p>
+</div></footer>
+
+<script>
+{
+const LV=n=>n>=20?["Crítico","var(--cr)"]:n>=10?["Alto","var(--hi)"]:n>=5?["Moderado","var(--mod)"]:["Baixo","var(--ok)"];
+const E=[
+{id:"almoxarifado",nome:"Almoxarifado de escritório",bg:"shelves",maq:"Fragmentadora de papel com a proteção quebrada",oleo:"Óleo vazando da paleteira manual",trab:"Auxiliar recém-contratado",
+ q1:["Piso escorregadio: óleo hidráulico vazando da paleteira manual, no corredor por onde se circula carregando caixas.","Fragmentadora de papel com a proteção da boca de alimentação quebrada, deixando as lâminas ao alcance dos dedos."],
+ q2:"Usar a fragmentadora sem orientação, empurrando o papel com os dedos para dentro da boca e com o cordão do crachá pendurado, que pode ser puxado. Também circular carregando caixas sem olhar o piso.",
+ q3:["Lesão nos dedos (corte ou esmagamento) ao serem puxados pelas lâminas.","Queda ao escorregar no óleo, com entorse, fratura de punho ou batida da cabeça."],
+ q4:["Tirar a fragmentadora de uso e etiquetar “fora de serviço” até trocar a proteção.","Limpar o óleo com material absorvente e sinalizar o piso.","Mandar a paleteira para manutenção do vazamento.","Orientar o auxiliar sobre o uso correto antes de ele voltar à tarefa."],
+ inv:{proc:"Armazenamento de materiais e descarte de documentos",ativ:"Recebimento e guarda de caixas; fragmentação de papel",exp:"2 auxiliares administrativos",exist:"Nenhuma medida formal"},
+ el:"Trocar a paleteira que vaza por uma revisada e usar fragmentadora com alimentação automática, em que o papel entra sozinho, sem a mão perto da lâmina.",
+ co:"Proteção da boca com abertura estreita e sensor que desliga as lâminas se for aberta; faixa antiderrapante no corredor.",
+ ad:"Orientação de uso dos equipamentos na integração e checklist semanal da paleteira e da fragmentadora.",
+ p:[3,2],d:[1,2],dano:"Lesão nos dedos"},
+{id:"oficina",nome:"Oficina mecânica",bg:"bench",maq:"Esmeril de bancada sem protetor do rebolo",oleo:"Óleo de motor derramado no box",trab:"Aprendiz sem treinamento",
+ q1:["Óleo de motor derramado no piso do box de troca de óleo, perto da bancada.","Esmeril sem o protetor do rebolo e sem o visor de proteção, com o apoio da peça mal regulado."],
+ q2:"Desbastar peças no esmeril sem saber regular o apoio, sem óculos e ficando de frente para o rebolo na partida. Trabalhar de tênis comum em cima do piso com óleo.",
+ q3:["Projeção de fragmentos nos olhos ou ruptura do rebolo atingindo o rosto.","Queda ao escorregar no óleo, batendo contra a bancada ou o elevador automotivo."],
+ q4:["Desligar o esmeril e só religar com protetor do rebolo e visor instalados e o apoio regulado.","Recolher o óleo com absorvente e destinar como resíduo perigoso (óleo usado).","Usar bandeja coletora na troca de óleo.","O aprendiz só volta ao esmeril depois de treinado e sempre acompanhado."],
+ inv:{proc:"Manutenção automotiva",ativ:"Troca de óleo e ajuste de peças no esmeril",exp:"Mecânicos e aprendiz (4 pessoas)",exist:"Óculos disponíveis, mas sem uso obrigatório"},
+ el:"Usar sistema de drenagem fechado com bandeja coletora, que acaba com o derramamento, e comprar peças prontas em vez de desbastar no esmeril nas tarefas de rotina.",
+ co:"Protetor do rebolo, visor transparente e aspiração de pó no esmeril; canaleta e piso antiderrapante no box.",
+ ad:"Treinamento e acompanhamento do aprendiz, procedimento de troca de óleo e inspeção do rebolo antes de cada uso.",
+ p:[4,3],d:[2,3],dano:"Lesão nos olhos e no rosto"},
+{id:"distribuicao",nome:"Centro de distribuição",bg:"shelves",maq:"Empilhadeira sem grade de proteção e sem alarme",oleo:"Óleo hidráulico nos corredores",trab:"Operador sem curso de empilhadeira",
+ q1:["Óleo hidráulico vazando da empilhadeira e espalhado nos corredores entre as prateleiras.","Empilhadeira sem a grade que protege o operador contra a queda de carga, sem alarme de ré e com o cinto quebrado."],
+ q2:"Dirigir a empilhadeira sem ter feito o curso e sem autorização, fazendo curvas rápidas no piso com óleo, levando paletes acima da capacidade e com pedestres por perto.",
+ q3:["Atropelamento ou prensamento de colegas contra as prateleiras.","Tombamento da empilhadeira ou queda de carga sobre o operador."],
+ q4:["Retirar a empilhadeira de operação até consertar o vazamento e reinstalar a grade, o alarme e o cinto.","Limpar e isolar os corredores contaminados.","Afastar o trabalhador: só dirige empilhadeira quem tem curso e autorização da empresa (NR-11).","Separar as rotas de pedestres e de empilhadeiras."],
+ inv:{proc:"Armazenagem e expedição de mercadorias",ativ:"Movimentação de paletes com empilhadeira",exp:"Operadores e conferentes (12 pessoas)",exist:"Nenhuma sinalização de rota"},
+ el:"Reorganizar o layout para que pedestres não precisem cruzar os corredores das empilhadeiras e trocar o equipamento que vaza por um revisado.",
+ co:"Faixas separadas para pedestres, espelhos convexos nos cruzamentos, alarme de ré e luz de aproximação; grade de proteção do operador.",
+ ad:"Só opera quem tem curso e cartão de autorização; checklist diário da empilhadeira antes do turno e limite de velocidade.",
+ p:[4,4],d:[2,4],dano:"Atropelamento e esmagamento"},
+{id:"metalurgica",nome:"Metalúrgica de estampagem",bg:"pipes",maq:"Prensa excêntrica sem proteção na zona de prensagem",oleo:"Óleo hidráulico e de corte em volta da prensa",trab:"Operador novato sem capacitação",
+ q1:["Prensa sem proteção na zona de prensagem: sem enclausuramento, cortina de luz ou comando bimanual.","Piso com óleo hidráulico e de corte em volta da prensa."],
+ q2:"Colocar e tirar a peça com a mão dentro da zona de prensagem, acionar o pedal sem proteção e tentar ajustar a ferramenta com a máquina ligada, por não conhecer os riscos.",
+ q3:["Esmagamento ou amputação de dedos e mãos.","Queda junto à máquina, com a mão indo parar na zona de prensagem."],
+ q4:["Interditar a prensa (parar e bloquear) até instalar as proteções exigidas pela NR-12.","Conter o vazamento, limpar o piso e instalar bandeja de contenção.","Capacitar o operador conforme a NR-12 antes de ele operar qualquer máquina.","Fazer APR para a troca de ferramenta, sempre com bloqueio de energia."],
+ inv:{proc:"Estampagem de peças metálicas",ativ:"Operação e troca de ferramenta da prensa excêntrica",exp:"Operadores de prensa (6 por turno)",exist:"Nenhuma proteção na zona de prensagem"},
+ el:"Automatizar a alimentação da prensa com alimentador de chapa ou robô, para que a mão nunca precise entrar na zona de prensagem.",
+ co:"Enclausuramento com cortina de luz, comando bimanual e relé de segurança; pedal com proteção; bacia de contenção do óleo.",
+ ad:"Capacitação conforme a NR-12, procedimento de bloqueio e etiquetagem para troca de ferramenta e inspeção diária das proteções.",
+ p:[4,5],d:[1,5],dano:"Amputação de mãos"},
+{id:"combustiveis",nome:"Depósito de combustíveis",bg:"tanks",fuel:1,maq:"Bomba de transferência com eixo exposto",oleo:"Óleo diesel derramado (inflamável)",trab:"Trabalhador sem curso de inflamáveis",
+ q1:["Diesel derramado na área de bombas: além de escorregadio, é inflamável e libera vapores.","Bomba de transferência com eixo e acoplamento girando sem proteção e motor elétrico inadequado para área classificada."],
+ q2:"Operar a bomba sem conhecer os riscos de inflamáveis: usar o celular e ferramenta comum que gera faísca, não aterrar o caminhão, limpar o derramamento com a bomba ligada e chegar perto do eixo girando.",
+ q3:["Incêndio ou explosão, com queimaduras graves e várias vítimas.","Agarramento da roupa pelo eixo, com amputação ou morte; contaminação do solo e da água."],
+ q4:["Parar a transferência, desligar e bloquear a bomba e eliminar as fontes de ignição.","Conter e recolher o diesel com kit de emergência e destinar como resíduo perigoso.","Instalar proteção no acoplamento e usar motor adequado à área classificada.","Afastar o trabalhador: na área só atua quem tem capacitação conforme a NR-20.","Revisar a análise de riscos e o plano de resposta a emergências."],
+ inv:{proc:"Armazenamento e transferência de combustíveis líquidos",ativ:"Carregamento de caminhões-tanque",exp:"Operadores, motoristas terceirizados e brigadistas",exist:"Apenas extintores"},
+ el:"Usar sistema de transferência fechado, com engates secos que não derramam, e bomba com acoplamento enclausurado, sem eixo exposto.",
+ co:"Bacia de contenção e canaleta para separador água e óleo, proteção fixa no acoplamento, aterramento do caminhão com intertravamento, detector de gases e sistema de combate a incêndio.",
+ ad:"Capacitação NR-20, permissão de trabalho, proibição de celular e de outras fontes de ignição e plano de emergência com simulados.",
+ p:[5,5],d:[1,5],dano:"Incêndio ou explosão"}];
+
+let cur=0,depois=false,disc=false,hot=0;
+const $=id=>document.getElementById(id);
+const li=a=>"<ul>"+a.map(x=>"<li>"+x+"</li>").join("")+"</ul>";
+
+function scale(){
+ $("scale").innerHTML=E.map((e,i)=>{const n=e.p[0]*e.p[1],[l,c]=LV(n);
+  return `<button type="button" aria-pressed="${i===cur}" data-i="${i}" style="--c:${c}"><i></i><strong>${e.nome}</strong><span>Risco ${l.toLowerCase()} (${n})</span></button>`}).join("");
+}
+
+function scene(e){
+ const n=e.p[0]*e.p[1],[,c]=LV(n);
+ let back="";
+ if(e.bg==="shelves")back=[0,1,2].map(r=>`<rect x="300" y="${60+r*56}" width="280" height="6" fill="#8a8679"/>`+[0,1,2,3].map(k=>`<rect x="${312+k*66}" y="${28+r*56}" width="${44+(k%2)*8}" height="32" rx="2" fill="${["#c99a5b","#b98a4f","#d6ab6c"][(k+r)%3]}"/>`).join("")).join("")+`<rect x="300" y="40" width="6" height="190" fill="#8a8679"/><rect x="574" y="40" width="6" height="190" fill="#8a8679"/>`;
+ if(e.bg==="bench")back=`<rect x="330" y="150" width="240" height="14" rx="3" fill="#7a5a3a"/><rect x="340" y="164" width="10" height="66" fill="#5e4630"/><rect x="550" y="164" width="10" height="66" fill="#5e4630"/><rect x="340" y="50" width="220" height="80" rx="4" fill="#5c6670"/>`+[0,1,2,3,4].map(k=>`<rect x="${356+k*40}" y="66" width="8" height="${34+k%2*12}" rx="3" fill="#c9ced3"/>`).join("");
+ if(e.bg==="pipes")back=`<rect x="290" y="70" width="300" height="12" rx="6" fill="#7f8a94"/><rect x="290" y="104" width="300" height="12" rx="6" fill="#6b7780"/><rect x="520" y="82" width="12" height="150" fill="#7f8a94"/><rect x="330" y="150" width="140" height="80" rx="6" fill="#4f5962"/><rect x="345" y="165" width="110" height="10" rx="3" fill="#ffc20e"/>`;
+ if(e.bg==="tanks")back=[0,1].map(k=>`<rect x="${320+k*130}" y="50" width="110" height="180" rx="16" fill="${k?"#9aa3ab":"#b3bbc2"}"/><rect x="${320+k*130}" y="50" width="110" height="20" rx="10" fill="#c8cfd5"/><g transform="translate(${375+k*130} 120)"><rect x="-18" y="-18" width="36" height="36" fill="#c51f1a" transform="rotate(45)"/><path d="M0 -14 C10 -2 9 12 0 14 C-9 12 -10 0 -3 -6 C-2 0 2 2 0 -14Z" fill="#fff"/></g>`).join("");
+ const vapor=e.fuel?[0,1,2].map(k=>`<path d="M${170+k*26} 262 q8 -12 0 -24 q-8 -12 0 -24" fill="none" stroke="#c51f1a" stroke-width="3" stroke-linecap="round" opacity=".6"/>`).join(""):"";
+ $("scene").innerHTML=`
+ <defs><radialGradient id="oil" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#6c5a2a"/><stop offset=".5" stop-color="#2a2414"/><stop offset="1" stop-color="#14110a"/></radialGradient>
+ <linearGradient id="sheen" x1="0" x2="1"><stop offset="0" stop-color="#7ad0ff" stop-opacity="0"/><stop offset=".5" stop-color="#c58cff" stop-opacity=".55"/><stop offset="1" stop-color="#ffd36b" stop-opacity="0"/></linearGradient></defs>
+ <rect width="600" height="240" fill="var(--wall)"/><rect x="0" y="0" width="600" height="8" fill="${c}"/>
+ ${back}
+ <polygon points="0,230 600,230 600,340 0,340" fill="var(--floor)"/>
+ <ellipse cx="300" cy="320" rx="300" ry="10" fill="#000" opacity=".06"/>
+ <ellipse cx="200" cy="280" rx="92" ry="24" fill="url(#oil)"/><ellipse cx="190" cy="275" rx="54" ry="9" fill="url(#sheen)"/>${vapor}
+ <ellipse cx="118" cy="300" rx="80" ry="10" fill="#000" opacity=".18"/>
+ <rect x="48" y="150" width="140" height="146" rx="10" fill="#e1a400"/><rect x="48" y="150" width="140" height="18" rx="8" fill="#ffc20e"/>
+ <rect x="56" y="282" width="124" height="16" rx="4" fill="#5a4a10"/>
+ <circle cx="118" cy="212" r="42" fill="#2c2f33"/>
+ <g class="gear"><circle cx="118" cy="212" r="34" fill="#9aa1a8"/>${[0,45,90,135].map(a=>`<rect x="114" y="174" width="8" height="76" rx="2" fill="#5b6168" transform="rotate(${a} 118 212)"/>`).join("")}<circle cx="118" cy="212" r="9" fill="#2c2f33"/></g>
+ <path d="M150 160 l16 28 h-32z" fill="#ffc20e" stroke="#151515" stroke-width="3" stroke-linejoin="round"/><rect x="148" y="170" width="4" height="9" fill="#151515"/>
+ <ellipse cx="420" cy="302" rx="44" ry="8" fill="#000" opacity=".2"/>
+ <rect x="402" y="232" width="15" height="70" rx="7" fill="#2f3b52"/><rect x="424" y="232" width="15" height="70" rx="7" fill="#2a3448"/>
+ <rect x="392" y="160" width="58" height="82" rx="18" fill="#3b6ea5"/><rect x="368" y="172" width="44" height="13" rx="6" fill="#3b6ea5" transform="rotate(-18 390 178)"/>
+ <circle cx="421" cy="138" r="20" fill="#8d5a3b"/><path d="M401 132 q20 -22 40 0" fill="#2a1d15"/>
+ ${[[262,262,1],[118,128,2],[421,100,3]].map(([x,y,k])=>`<g class="pin" data-k="${k}" style="cursor:pointer"><circle cx="${x}" cy="${y}" r="17" fill="${hot===k?"#151515":"#d7261e"}" stroke="#fff" stroke-width="3"/><text x="${x}" y="${y+6}" text-anchor="middle" font-family="Barlow" font-weight="700" font-size="17" fill="#fff">${k}</text></g>`).join("")}`;
+ $("legend").innerHTML=[e.oleo,e.maq,e.trab].map((t,i)=>`<button type="button" class="hs${hot===i+1?" act":""}" data-k="${i+1}"><b>${i+1}</b><span>${t}</span></button>`).join("");
+}
+
+function meter(e){
+ const v=depois?e.d:e.p,n=v[0]*v[1],[l,c]=LV(n);
+ let cells="";
+ for(let p=5;p>=1;p--){cells+=`<div class="ax">${p}</div>`;for(let s=1;s<=5;s++){const m=p*s;cells+=`<div class="${p===v[0]&&s===v[1]?"pin":""}" style="background:${LV(m)[1]}">${m}</div>`}}
+ cells+=`<div class="ax"></div>`+[1,2,3,4,5].map(s=>`<div class="ax">${s}</div>`).join("");
+ $("meter").style.setProperty("--lc",c);
+ $("meter").innerHTML=`<h3>Nível de risco ${depois?"depois das medidas":"agora"}</h3>
+ <div class="big"><strong>${n}</strong><span>${l}</span><small>Probabilidade ${v[0]} × severidade ${v[1]} — dano mais grave: ${e.dano.toLowerCase()}</small></div>
+ <div class="mx" aria-label="Matriz de risco 5 por 5">${cells}</div>
+ <div class="mxl"><span>↑ probabilidade</span><span>severidade →</span></div>
+ <div class="ba"><button type="button" class="btn${depois?"":" on"}" data-b="0">Antes</button><button type="button" class="btn${depois?" on":""}" data-b="1">Depois</button></div>
+ <p class="note">Faixas: 1–4 baixo, 5–9 moderado, 10–16 alto, 20–25 crítico.</p>`;
+}
+
+function qs(e){
+ const n=e.p[0]*e.p[1],m=e.d[0]*e.d[1];
+ const Q=[
+ ["Identifique duas condições perigosas no ambiente.",li(e.q1),1],
+ ["Qual comportamento do trabalhador aumenta a exposição ao risco?",`<p>${e.q2}</p><p class="warn">Mas a culpa não é só dele: operar sem treinamento é falha da empresa, que deve capacitar antes de liberar a tarefa (NR-1). Punir o trabalhador sem corrigir isso não resolve.</p>`,3],
+ ["Cite dois danos que podem ocorrer.",li(e.q3),0],
+ ["Que medidas devem ser adotadas antes de continuar o trabalho?",li(e.q4),0],
+ ["Que informações devem constar no inventário de riscos?",`<p>Pela NR-1, no mínimo: o processo e o ambiente, as atividades, os perigos com suas fontes, as possíveis lesões, quem está exposto, as medidas já existentes, a avaliação do risco e o critério usado. Neste ambiente:</p>
+ <dl class="inv"><dt>Processo / ambiente</dt><dd>${e.inv.proc}</dd><dt>Atividade</dt><dd>${e.inv.ativ}</dd>
+ <dt>Perigos e fontes</dt><dd>${e.oleo}; ${e.maq.charAt(0).toLowerCase()+e.maq.slice(1)}; trabalhador sem treinamento</dd>
+ <dt>Possíveis lesões ou agravos</dt><dd>${e.q3.join(" ")}</dd><dt>Trabalhadores expostos</dt><dd>${e.inv.exp}</dd>
+ <dt>Medidas já existentes</dt><dd>${e.inv.exist}</dd><dt>Avaliação</dt><dd>P${e.p[0]} × S${e.p[1]} = ${n} (${LV(n)[0].toLowerCase()}); após o plano de ação: ${m} (${LV(m)[0].toLowerCase()})</dd>
+ <dt>Critério</dt><dd>Matriz 5×5 de probabilidade × severidade</dd></dl>`,0]];
+ $("qtitle").textContent="Respostas — "+e.nome;
+ $("qs").innerHTML=Q.map((q,i)=>`<article class="q${disc?" hid":""}" id="q${i+1}"><b>${i+1}</b><h3>${q[0]}</h3><div class="ans">${q[1]}</div><button type="button" class="btn reveal" data-r="${i+1}">Ver resposta</button></article>`).join("");
+ $("des").innerHTML=[["Eliminação","Remove o perigo",e.el,"var(--ok)"],["Proteção coletiva","Protege todos de uma vez",e.co,"var(--yel)"],["Administrativa","Organiza o trabalho",e.ad,"var(--hi)"]]
+  .map(d=>`<div class="d" style="--c:${d[3]}"><span>${d[1]}</span><h3>${d[0]}</h3><p>${d[2]}</p></div>`).join("");
+}
+
+function cmp(){
+ const pill=n=>{const[l,c]=LV(n);return `<span class="pill" style="background:${c}">${n} ${l}</span>`};
+ $("cmp").innerHTML=E.map((e,i)=>`<tr class="${i===cur?"cur":""}"><td><b>${e.nome}</b></td><td>${e.maq}</td><td>${e.dano}</td><td>${pill(e.p[0]*e.p[1])}</td><td>${pill(e.d[0]*e.d[1])}</td></tr>`).join("");
+}
+
+function render(){const e=E[cur];scale();scene(e);meter(e);qs(e);cmp();
+ $("prev").disabled=cur===0;$("next").disabled=cur===E.length-1;
+ $("mode").classList.toggle("on",disc);$("mode").setAttribute("aria-pressed",disc);
+ if(location.hash.slice(1)!==e.id)history.replaceState(null,"","#"+e.id);}
+function go(i){cur=Math.max(0,Math.min(E.length-1,i));hot=0;depois=false;render();
+ const b=$("scale").children[cur];b&&b.scrollIntoView({block:"nearest",inline:"nearest"});}
+function fromHash(){const i=E.findIndex(x=>x.id===location.hash.slice(1));if(i>=0&&i!==cur)go(i);}
+
+$("scale").addEventListener("click",ev=>{const b=ev.target.closest("button");if(b)go(+b.dataset.i)});
+$("prev").addEventListener("click",()=>go(cur-1));$("next").addEventListener("click",()=>go(cur+1));
+$("mode").addEventListener("click",()=>{disc=!disc;render()});
+$("meter").addEventListener("click",ev=>{const b=ev.target.closest("[data-b]");if(b){depois=b.dataset.b==="1";meter(E[cur])}});
+$("qs").addEventListener("click",ev=>{const b=ev.target.closest("[data-r]");if(b)$("q"+b.dataset.r).classList.remove("hid")});
+const pick=k=>{hot=hot===k?0:k;scene(E[cur]);const t=$(k===3?"q2":"q1");if(hot){t.classList.remove("hid");t.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth",block:"center"})}};
+$("scene").addEventListener("click",ev=>{const g=ev.target.closest(".pin");if(g)pick(+g.dataset.k)});
+$("legend").addEventListener("click",ev=>{const b=ev.target.closest(".hs");if(b)pick(+b.dataset.k)});
+document.addEventListener("keydown",ev=>{if(ev.target.closest("input,textarea"))return;if(ev.key==="ArrowRight")go(cur+1);if(ev.key==="ArrowLeft")go(cur-1)});
+window.addEventListener("hashchange",fromHash);
+const h=E.findIndex(x=>x.id===location.hash.slice(1));if(h>0)cur=h;
+render();
+{const b=$("scale").children[cur];if(b)$("scale").scrollLeft=b.offsetLeft-$("scale").offsetLeft-4;}
+}
+</script>
+</body>
+</html>
